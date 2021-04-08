@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <title>SSO in zabbix &mdash; not name</title>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:400,700">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css">
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css">
+    <link rel="stylesheet" href="../../css/theme.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script> 
+</head>
+
+<body ontouchstart="">
+    <div id="container">
+        <aside>
+            <div class="home">
+                <div class="title">
+                    <button class="hamburger"></button>
+                    <a href="../.." class="site-name"> not name</a>
+                </div>
+                <div class="search">
+                    <div role="search">
+    <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+        <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+    </form>
+</div>
+                </div>
+            </div>
+            <nav class="nav">
+                <ul class="root">
+                    <li class="toctree-l1"><button class="section nav-item">Zabbix</button>
+<ul class="subnav">
+    <li class="toctree-l2"><a class="nav-item" href="../Partitioning/">Partitioning with external script for mysql/mariadb database</a></li>
+    <li class="toctree-l2 current"><a class="nav-item current" href="./">SSO in zabbix</a>
+<ul class="subnav">
+<li class="toctree-l3"><a class="nav-item toc" href="#ldapldaps">LDAP/LDAPS</a></li>
+<li class="toctree-l3"><a class="nav-item toc" href="#dc">DC</a></li>
+<li class="toctree-l3"><a class="nav-item toc" href="#kerberos">Kerberos</a></li>
+<li class="toctree-l3"><a class="nav-item toc" href="#web">web</a></li>
+<li class="toctree-l3"><a class="nav-item toc" href="#browser">Browser</a></li>
+<li class="toctree-l3"><a class="nav-item toc" href="#debug">debug</a></li>
+<li class="toctree-l3"><a class="nav-item toc" href="#some-links">Some links</a></li>
+</ul></li>
+    <li class="toctree-l2"><a class="nav-item" href="../mysql_monitoring/">Monitoring mysql/mariadb</a></li>
+    <li class="toctree-l2"><a class="nav-item" href="../zabbix-agent/">install [zabbix-agent]</a></li>
+    <li class="toctree-l2"><a class="nav-item" href="../zabbix-proxy/">Zabbix-proxy</a></li>
+</ul></li>
+                </ul>
+            </nav>
+            <div class="repo">
+    <div class="link">
+        <a href="https://github.com/notoriginalnik/notoriginalnik.github.io/" class="fa fa-github"> GitHub</a>
+    </div>
+    <div class="previous"><a href="../Partitioning/">&laquo; Previous</a></div>
+    <div class="next"><a href="../mysql_monitoring/">Next &raquo;</a></div>
+</div>
+        </aside>
+        <div id="spacer"><button class="arrow"></button></div>
+        <main>
+            <div class="home-top">
+                <button class="hamburger"></button>
+                <a href="../.." class="site-name"> not name</a>
+            </div>
+            <div id="main">
+                <nav class="breadcrumbs">
+<ul>
+    <li>Zabbix</li>
+</ul>
+</nav>
+                <div id="content"><h1 id="sso-in-zabbix">SSO in zabbix</h1>
+<h2 id="ldapldaps">LDAP/LDAPS</h2>
+<p>Let us configure LDAP authentication in Zabbix. In the Zabbix frontend, go to the LDAP settings tab in Administration -&gt; Authentication.</p>
+<p>Check Enable LDAP authentication and fill in the following fields:</p>
+<pre><code>LDAP host: ldap://dc1.domain.local
+Port: 389
+Base DN: DC=domain, DC=local
+Search attribute: sAMAccountName
+Bind DN: CN=zabbix,OU=Users,DC=domain,DC=local
+</code></pre>
+<p>If the test has been successful, save the settings, and change the authentication type in Zabbix from Internal to LDAP</p>
+<p>LDAP authentication is configured. If the LDAP server is unavailable, we will not be able to access Zabbix.</p>
+<p>after Enable HTTP authentication (HTTP Settings -&gt; Enable HTTP authentication):
+To get back to the internal authentication, we open MySQL, and run the following command:
+update zabbix.config set authentication_type='0' where configid='1?;</p>
+<h2 id="dc">DC</h2>
+<p>Create A record in dns and user in AD users, then:</p>
+<pre><code class="language-cmd">ktpass -princ HTTP/zabbix.domain.local@DOMAIN.LOCAL -mapuser zabbix@DOMAIN.LOCAL -crypto all -pass VeryStrongPASS!!! -ptype KRB5_NT_PRINCIPAL -out my.keytab
+</code></pre>
+<h2 id="kerberos">Kerberos</h2>
+<p>For Centos:</p>
+<pre><code class="language-sh">yum install krb5-workstation krb5-libs krb5-auth-dialog mod_auth_kerb ntp ntpdate -y
+ntpdate DC1.domain.local
+vi /etc/krb5.conf
+</code></pre>
+<p>Change next in /etc/krb5.conf:</p>
+<pre><code class="language-conf">[realms]
+ EXAMPLE.COM = {
+  kdc = kerberos.example.com
+ admin_server = kerberos.example.com
+ }
+
+[domain_realm]
+ .example.com = EXAMPLE.COM
+ example.com = EXAMPLE.COM
+</code></pre>
+<p>Restart Apache to take effect
+specify the FQDN name of the server in /etc/hostname that must match the DNS record in the domain.</p>
+<pre><code class="language-sh">cat /etc/hosts
+127.0.0.1   zabbix.domain.local zabbix
+'server ip' zabbix.domain.local zabbix
+</code></pre>
+<p>After copy keytab file from DC, we need check permission for this.</p>
+<p>Command <code>klist</code> will show if the ticket was created.
+Create a Kerberos ticket for user OR easy to check if your krb5.conf is valid by doing <code>kinit username@DOMAIN.COM</code>, for our example <code>kinit zabbix</code>.
+Make sure the Kerberos authentication works on Linux:<code>kinit -kV -p HTTP/zabbix.domain.local</code>.
+Delete tickets - <code>kdestroy -A</code>.</p>
+<h2 id="web">web</h2>
+<p>Enable HTTP authentication in zabbix, and im not think that change default login form is good for all. So i want work with link <code>/zabbix/index_http.php</code>.
+For apache add next block in /etc/httpd/conf.d/zabbix.conf:</p>
+<pre><code class="language-conf">&lt;Location /zabbix/index_http.php&gt;
+        AuthType Kerberos
+        AuthName &quot;Kerberos Authenticated&quot;
+        KrbAuthRealms DOMAIN.LOCAL
+        Krb5Keytab &quot;/etc/httpd/conf.d/zabbix.keytab&quot;
+        KrbMethodNegotiate On
+        KrbSaveCredentials On
+        KrbVerifyKDC On
+        KrbServiceName Any
+        KrbLocalUserMapping On
+        KrbMethodK5Passwd Off
+        Require valid-user
+#        LogLevel trace8
+&lt;/Location&gt;
+</code></pre>
+<h2 id="browser">Browser</h2>
+<p>For Internet Explorer to use Kerberos authentication on Zabbix, we will have to add its URL to Local Intranet sites.
+Google Chrome uses Internet Explorer settings, so we do not need to configure it separately.
+i. Open Options -&gt; Security in the IE.
+ii. Click Sites in the Local intranet, check the options shown in the screenshot below, and click Advanced:
+iii. Later, enter the Zabbix server URL.
+iv. Then, go to the Advanced tab and check Enable Integrated Windows Authentication.
+v. Also, we can also put Zabbix URL to the Local Intranet zone using the Group Policies (Computer Configuration -&gt; Administrative Templates -&gt; Windows Components -&gt; Internet Explorer -&gt; Internet Control Panel -&gt; Security Page -&gt; Site to Zone Assignment List. Use zone code 1 for intranet sites).
+vi. Add the URL of the Zabbix server to the following parameters of about:config for Mozilla Firefox:</p>
+<p>network.automatic-ntlm-auth.trusted-uris</p>
+<p>network.negotiate-auth.delegation-uris</p>
+<p>network.negotiate-auth.trusted-uris</p>
+<h2 id="debug">debug</h2>
+<h3 id="kerberos-authentication-debugging-troubleshooting-in-apache">Kerberos Authentication Debugging &amp; Troubleshooting in Apache</h3>
+<p>If we have any issues, enable debug mode in apache:
+Enter the following before the closing </VirtualHost> tag in /etc/apache2/sites-available/000-defaults.conf:</p>
+<p>LogLevel trace8</p>
+<p>Then we restart apache and check the Kerberos module error in the error.log file.</p>
+<p>To make it more convenient, we use the command to filter the entries by the IP address:</p>
+<pre><code class="language-sh">tailf /var/log/httpd/error_log | grep 'our ip'
+tail -f /var/log/apache2/error.log | grep 'Our IP address'
+</code></pre>
+<p>Similarly, to work with and diagnose Kerberos, we can use kinit and klist commands.
+kinit is a tool to get and cache Kerberos tickets, for example:
+<code>kinit -V -k -t /etc/apache2/zabbix.keytab -p HTTP/zabbix.domain.local@DOMAIN.LOCAL</code>
+If we have generated our keytab file correctly, the command will run. 
+As a result, we will get a message that the authentication has been successful.</p>
+<p>Using klist, we can view cached Kerberos tickets:
+klist -a</p>
+<p>Make sure that the SPN record for your Zabbix service account exists in AD. Enter the following command on the domain controller:</p>
+<p><code>setpn -l zabbix_admin</code></p>
+<p>It must be in HTTP/zabbix.domain.local format. If there is no entry, add it.</p>
+<p><code>setspn -a HTTP/zabbix.domain.local zabbix_admin</code></p>
+<p>If KrbServiceName does not match the name specified in the keyboard file, an error occurs. So you can set the desired value during the test. Once you have made sure that the system is working, enter a valid service name. You can check with:
+klist - the /etc/apache2/zabbix.keytab</p>
+<h3 id="notes">Notes</h3>
+<p>A successful request should look like:</p>
+<p>Acquiring creds for HTTP/web01@DOMAIN.NET
+Verifying client data using KRB5 GSS-API
+Client didn't delegate us their credential
+GSS-API token of length XXX bytes will be sent back</p>
+<pre><code>gss_accept_sec_context() failed: An unsupported mechanism was requested (, Unknown error)
+</code></pre>
+<p>This usually means there's something wrong with the principal configuration.</p>
+<pre><code>GSS-API major_status:000d0000, minor_status:025ea101
+</code></pre>
+<p>Could no find principal. Spelling error or wrong syntax ?</p>
+<pre><code>GSS-API major_status:000d0000, minor_status:0000000d
+</code></pre>
+<p>File permission errors (usually the keytab file).</p>
+<pre><code>GSS-API major_status:000d0000, minor_status:000186a3
+</code></pre>
+<p>Wrong password in keytab or your ticket.</p>
+<pre><code>kinit: Preauthentication failed while getting initial credentials
+</code></pre>
+<p>Wrong password and/or credentials in general (check letter casing)</p>
+<pre><code>kinit: KDC has no support for encryption type while getting initial credentials
+</code></pre>
+<p>Encryption type is not supported by the AD server. Make sure not to use DES.</p>
+<pre><code>Users not getting synced
+</code></pre>
+<p>Make sure the users are as low in the hierarchy as possible or else they might not get caught.</p>
+<pre><code>General authentication errors
+</code></pre>
+<p>Make sure you're typing the login in correct case. They also have to match in the keytab file.</p>
+<h2 id="some-links">Some links</h2>
+<p>https://plugins.miniorange.com/guide-to-setup-kerberos-single-sign-sso
+https://www.drupal.org/project/ldap/issues/2123615
+https://www.zabbix.com/documentation/current/manual/appendix/items/kerberos
+https://gist.github.com/andersevenrud/53920c3ef91c5e11c939fce5ca17af3b
+https://www.drupal.org/project/ldap/issues/2123615
+https://jakondo.ru/integratsiya-zabbix-s-active-directory-nastrojka-prozrachnoj-autentifikatsii-sso-single-sign-on/
+https://jakondo.ru/nastrojka-sso-single-sign-on-avtorizatsii-na-apache-v-active-directory-debian-8-jessie-ubuntu-server-14-04/
+http://woshub.com/zabbix-single-sign-sso-authentication-ldap-active-directory/</p></div>
+                <footer>
+    <div class="footer-buttons">
+        <div class="previous"><a href="../Partitioning/" title="Partitioning with external script for mysql/mariadb database"><span>Previous</span></a></div>
+        <div class="next"><a href="../mysql_monitoring/" title="Monitoring mysql/mariadb"><span>Next</span></a></div>
+    </div>
+    <div class="footer-note">
+        <p>
+            Built with <a href="http://www.mkdocs.org">MkDocs</a> using
+            <a href="https://github.com/daizutabi/mkdocs-ivory">Ivory theme</a>.
+        </p>
+    </div>
+</footer>
+            </div>
+        </main>
+    </div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js"></script>
+    <script src="../../search/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <title>install [zabbix-agent] &mdash; not name</title>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:400,700">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css">
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css">
+    <link rel="stylesheet" href="../../css/theme.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script> 
+</head>
+
+<body ontouchstart="">
+    <div id="container">
+        <aside>
+            <div class="home">
+                <div class="title">
+                    <button class="hamburger"></button>
+                    <a href="../.." class="site-name"> not name</a>
+                </div>
+                <div class="search">
+                    <div role="search">
+    <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+        <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+    </form>
+</div>
+                </div>
+            </div>
+            <nav class="nav">
+                <ul class="root">
+                    <li class="toctree-l1"><button class="section nav-item">Zabbix</button>
+<ul class="subnav">
+    <li class="toctree-l2"><a class="nav-item" href="../Partitioning/">Partitioning with external script for mysql/mariadb database</a></li>
+    <li class="toctree-l2"><a class="nav-item" href="../SSO/">SSO in zabbix</a></li>
+    <li class="toctree-l2"><a class="nav-item" href="../mysql_monitoring/">Monitoring mysql/mariadb</a></li>
+    <li class="toctree-l2 current"><a class="nav-item current" href="./">install [zabbix-agent]</a>
+<ul class="subnav">
+<li class="toctree-l3"><a class="nav-item toc" href="#playbook">playbook</a></li>
+<li class="toctree-l3"><a class="nav-item toc" href="#win">win</a></li>
+</ul></li>
+    <li class="toctree-l2"><a class="nav-item" href="../zabbix-proxy/">Zabbix-proxy</a></li>
+</ul></li>
+                </ul>
+            </nav>
+            <div class="repo">
+    <div class="link">
+        <a href="https://github.com/notoriginalnik/notoriginalnik.github.io/" class="fa fa-github"> GitHub</a>
+    </div>
+    <div class="previous"><a href="../mysql_monitoring/">&laquo; Previous</a></div>
+    <div class="next"><a href="../zabbix-proxy/">Next &raquo;</a></div>
+</div>
+        </aside>
+        <div id="spacer"><button class="arrow"></button></div>
+        <main>
+            <div class="home-top">
+                <button class="hamburger"></button>
+                <a href="../.." class="site-name"> not name</a>
+            </div>
+            <div id="main">
+                <nav class="breadcrumbs">
+<ul>
+    <li>Zabbix</li>
+</ul>
+</nav>
+                <div id="content"><h1 id="install-zabbix-agent">install <a href="https://www.zabbix.com/documentation/current/manual/concepts/agent">zabbix-agent</a></h1>
+<p>Go in <a href="https://repo.zabbix.com/zabbix/">repo</a> for actual version of rpm (example Centos 7) :</p>
+<pre><code class="language-sh">rpm -ivh https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm 
+yum -y install zabbix-agent
+chkconfig zabbix-agent on
+</code></pre>
+<p>You can use jinja template for config of zabbix-agent <code>/etc/zabbix/zabbix_agentd.conf</code>.
+Default settings on agent (other options generally useless):</p>
+<pre><code class="language-conf">PidFile=/var/run/zabbix/zabbix_agentd.pid
+LogFile=/var/log/zabbix/zabbix_agentd.log
+LogFileSize=0
+Server={{ Proxy[hostname] }}
+ServerActive={{ Proxy[hostname] }}
+Hostname={{ Host[hostname] }} # !!!Must be like name of host in web
+Include=/etc/zabbix/zabbix_agentd.d/*.conf
+</code></pre>
+<p>Give access and starting:</p>
+<pre><code class="language-sh">iptables -I INPUT -p tcp --dport 10050 -j ACCEPT
+iptables-save &gt; /dev/null 2&gt;&amp;1
+service zabbix-agent start
+</code></pre>
+<p>If we use selinux, need allow zabbix-agent, or check that selinux disabled.
+For firewalld:</p>
+<pre><code class="language-sh">firewall-cmd --permanent --add-port=10050/tcp
+firewall-cmd --reload
+</code></pre>
+<p>You may need to create directories manually:</p>
+<pre><code class="language-sh">mkdir /var/run/zabbix &amp;&amp; chown -R zabbix:zabbix /var/run/zabbix
+mkdir /var/log/zabbix &amp;&amp; chown -R zabbix:zabbix /var/log/zabbix
+</code></pre>
+<h2 id="playbook">playbook</h2>
+<p>Example of ansible role for centos 7:</p>
+<pre><code class="language-yml">- name: Install, configure, and start zabbix-agent
+  block:
+    - name: add rpm
+      yum: name=https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm
+
+    - name: install zabbix-agent
+      yum:
+        name: zabbix-agent
+        state: present
+
+    - name: copy userparams
+      copy:
+       src: 'templates/userparams.conf'
+       dest: '/etc/zabbix/zabbix_agentd.d/userparams.conf'
+       owner: zabbix
+       group: zabbix
+
+    - name: make config
+      template:
+       src: 'templates/zabbix_agentd.j2'
+       dest: '/etc/zabbix/zabbix_agentd.conf'
+
+    - name: add line in iptables
+      command: iptables -I INPUT 5 -p tcp --dport 10050 -j ACCEPT
+
+    - name: iptables save
+      shell: iptables-save &gt; /etc/sysconfig/iptables
+
+    - name: enable zabbix-agent
+      command: chkconfig zabbix-agent on
+
+    - name: start zabbix-agent
+      service:
+        name: zabbix-agent
+        state: started
+  when: 
+    - ansible_facts['distribution'] == 'CentOS'
+    - ansible_facts['distribution_major_version'] == &quot;7&quot;
+  become: true
+  ignore_errors: yes
+</code></pre>
+<h2 id="win">win</h2>
+<p>If you <a href="https://www.zabbix.com/download_agents">downloaded</a> archive , unzip the files and put them where they should be (i put the files in c:\zabbix for example).
+Change settings Server/ServerActive/Hostname in zabbix_agentd.conf. Run cmd from admin: </p>
+<pre><code class="language-cmd">zabbix_agentd.exe -c c:\zabbix\conf\zabbix_agentd.conf --install
+zabbix_agentd.exe --start
+</code></pre>
+<p>Do not forget to add an exception to the firewall =)</p></div>
+                <footer>
+    <div class="footer-buttons">
+        <div class="previous"><a href="../mysql_monitoring/" title="Monitoring mysql/mariadb"><span>Previous</span></a></div>
+        <div class="next"><a href="../zabbix-proxy/" title="Zabbix-proxy"><span>Next</span></a></div>
+    </div>
+    <div class="footer-note">
+        <p>
+            Built with <a href="http://www.mkdocs.org">MkDocs</a> using
+            <a href="https://github.com/daizutabi/mkdocs-ivory">Ivory theme</a>.
+        </p>
+    </div>
+</footer>
+            </div>
+        </main>
+    </div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js"></script>
+    <script src="../../search/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <title>Zabbix-proxy &mdash; not name</title>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:400,700">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css">
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css">
+    <link rel="stylesheet" href="../../css/theme.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script> 
+</head>
+
+<body ontouchstart="">
+    <div id="container">
+        <aside>
+            <div class="home">
+                <div class="title">
+                    <button class="hamburger"></button>
+                    <a href="../.." class="site-name"> not name</a>
+                </div>
+                <div class="search">
+                    <div role="search">
+    <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+        <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+    </form>
+</div>
+                </div>
+            </div>
+            <nav class="nav">
+                <ul class="root">
+                    <li class="toctree-l1"><button class="section nav-item">Zabbix</button>
+<ul class="subnav">
+    <li class="toctree-l2"><a class="nav-item" href="../Partitioning/">Partitioning with external script for mysql/mariadb database</a></li>
+    <li class="toctree-l2"><a class="nav-item" href="../SSO/">SSO in zabbix</a></li>
+    <li class="toctree-l2"><a class="nav-item" href="../mysql_monitoring/">Monitoring mysql/mariadb</a></li>
+    <li class="toctree-l2"><a class="nav-item" href="../zabbix-agent/">install [zabbix-agent]</a></li>
+    <li class="toctree-l2 current"><a class="nav-item current" href="./">Zabbix-proxy</a>
+<ul class="subnav">
+<li class="toctree-l3"><a class="nav-item toc" href="#install">Install</a></li>
+<li class="toctree-l3"><a class="nav-item toc" href="#monitoring-in-zabbix">Monitoring in zabbix</a></li>
+<li class="toctree-l3"><a class="nav-item toc" href="#upgrade">Upgrade</a></li>
+<li class="toctree-l3"><a class="nav-item toc" href="#parameters">Parameters</a></li>
+</ul></li>
+</ul></li>
+                </ul>
+            </nav>
+            <div class="repo">
+    <div class="link">
+        <a href="https://github.com/notoriginalnik/notoriginalnik.github.io/" class="fa fa-github"> GitHub</a>
+    </div>
+    <div class="previous"><a href="../zabbix-agent/">&laquo; Previous</a></div>
+</div>
+        </aside>
+        <div id="spacer"><button class="arrow"></button></div>
+        <main>
+            <div class="home-top">
+                <button class="hamburger"></button>
+                <a href="../.." class="site-name"> not name</a>
+            </div>
+            <div id="main">
+                <nav class="breadcrumbs">
+<ul>
+    <li>Zabbix</li>
+</ul>
+</nav>
+                <div id="content"><h1 id="zabbix-proxy">Zabbix-proxy</h1>
+<h2 id="install">Install</h2>
+<pre><code class="language-sh">rpm --import http://repo.zabbix.com/RPM-GPG-KEY-ZABBIX
+rpm -ivh http://repo.zabbix.com/zabbix/4.2/rhel/7/x86_64/zabbix-release-4.2-1.el7.noarch.rpm
+yum install zabbix-proxy-mysql -y
+yum install mariadb-server -y
+systemctl enable mariadb &amp;&amp; systemctl start mariadb
+
+</code></pre>
+<p>Prepare database with little script - <code>vi mysql_secure_installation.sql</code>:</p>
+<pre><code class="language-sql">UPDATE mysql.user SET Password=PASSWORD('password') WHERE User='root';
+DELETE FROM mysql.user WHERE User='';
+DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
+DROP DATABASE IF EXISTS test;
+DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
+create database zabbix character set utf8 collate utf8_bin;
+grant all privileges on zabbix.* to zabbix@localhost identified by 'password';
+FLUSH PRIVILEGES;
+</code></pre>
+<pre><code class="language-sh">mysql -sfu root &lt; mysql_secure_installation.sql
+
+mysql -u root -p
+
+zcat /usr/share/doc/zabbix-proxy-mysql-4.2.1/schema.sql.gz | mysql -u zabbixuser zabbix_proxy -p
+</code></pre>
+<p>You can use jinja template for config of zabbix-agent <code>/etc/zabbix/zabbix_proxy.conf</code>.
+Default settings on agent (other options generally useless):</p>
+<pre><code class="language-conf">PidFile=/var/run/zabbix/zabbix_proxy.pid
+LogFile=/var/log/zabbix/zabbix_proxy.log
+LogFileSize=0
+Server={{ Proxy[hostname] }}
+ServerActive={{ Proxy[hostname] }}
+Hostname={{ Host[hostname] }} # !!!Must be like name of host in web
+SocketDir=/var/run/zabbix
+DBName=zabbix
+DBUser=zabbix
+DBPassword=zabbix
+</code></pre>
+<p>If we use selinux, need allow zabbix-agent, or check that selinux disabled.
+Change rules of firewalld and start:</p>
+<pre><code class="language-sh">firewall-cmd --permanent --add-port=10050/tcp
+firewall-cmd --permanent --add-port=10051/tcp
+firewall-cmd --reload
+systemctl enable zabbix-proxy &amp; systemctl start zabbix-proxy
+</code></pre>
+<h2 id="monitoring-in-zabbix">Monitoring in zabbix</h2>
+<p>Using default template <code>Template App Zabbix Proxy</code>.
+For collecting metrics from proxy, option Server/ServerActive must =<Proxy ip> in zabbix-agent config.</p>
+<h2 id="upgrade"><a href="https://www.zabbix.com/documentation/5.0/manual/installation/upgrade/packages/rhel_centos">Upgrade</a></h2>
+<p>While upgrading Zabbix agents is not mandatory (but recommended), Zabbix server and proxies must be of the same major version. 
+Therefore, in a server-proxy setup, Zabbix server and all proxies have to be stopped and upgraded. 
+Keeping proxies running during server upgrade no longer will bring any benefit as during proxy upgrade their old data will be discarded 
+and no new data will be gathered until proxy configuration is synced with server. </p>
+<pre><code class="language-sh">service zabbix-proxy stop &amp; service zabbix-agent stop
+rpm -Uvh https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm
+yum upgrade zabbix-proxy-mysql zabbix-agent -y
+systemctl start zabbix-proxy &amp; systemctl start zabbix-agent
+</code></pre>
+<h3 id="sqlite">SQLite</h3>
+<p>Please note that if you have a proxy with a SQLite database, the history data of these proxies will be lost until the update.
+As updating the SQLite database file is not supported and this file must be deleted manually.
+When the proxy is started for the first time and the SQLite database file is missing, the proxy will create it automatically. </p>
+<h3 id="playbook-for-update-on-centos-7">Playbook for update on Centos 7</h3>
+<pre><code class="language-yml">    - name: STOP zabbix-proxy
+      service:
+        name: zabbix-proxy
+        state: stopped
+
+    - name: rpm-zabbix-5.0-1
+      yum: name=https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm
+
+    - name: UPGRADE zabbix-proxy
+      yum:
+        name: zabbix-proxy
+        state: latest
+
+    - name: START zabbix-proxy
+      service:
+        name: zabbix-proxy
+        state: started
+  when: 
+    - ansible_facts['distribution'] == 'CentOS'
+    - ansible_facts['distribution_major_version'] == &quot;7&quot;
+  become: true
+  ignore_errors: yes
+</code></pre>
+<h2 id="parameters">Parameters</h2>
+<p>When changing the parameters in the /etc/zabbix/zabbix_proxy.conf config, you need to restart the proxy to apply the changes: <code>service zabbix-proxy restart</code> or<code>/etc/init.d/zabbix-proxy restart</code>.</p>
+<p>We check the proxy status via <code>service zabbix-server status</code> or if it is not clear<code>journalctl -xe</code> and in the log /var/log/zabbix/zabbix-proxy.log.</p>
+<p>To manually pull the configuration from the server without waiting for an automatic request:
+zabbix_proxy -R config_cache_reload</p>
+<p>In the proxy parameters, there are Pollers - these are processes that poll agents.
+A lot of them are needed in two cases: a large network and many unavailable resources are monitored.
+The increase in processes puts a lot of stress, thereby consuming precious resources.</p>
+<p>There is also an important timeout parameter that needs to be adjusted for current tasks. All checks that do not fit into it will be spent.</p>
+<p>If you do not monitor the use of pollers, then triggers of the form "Zabbix unreachable poller processes more than 75% busy" will probably appear, which indicate that their number is not enough.
+It can be the same with the cache, especially considering that there are several of them. </p>
+<p>https://www.zabbix.com/documentation/5.0/manual/concepts/proxy?s[]=proxy
+https://www.zabbix.com/documentation/5.0/manual/distributed_monitoring/proxies?s[]=proxy</p></div>
+                <footer>
+    <div class="footer-buttons">
+        <div class="previous"><a href="../zabbix-agent/" title="install [zabbix-agent]"><span>Previous</span></a></div>
+    </div>
+    <div class="footer-note">
+        <p>
+            Built with <a href="http://www.mkdocs.org">MkDocs</a> using
+            <a href="https://github.com/daizutabi/mkdocs-ivory">Ivory theme</a>.
+        </p>
+    </div>
+</footer>
+            </div>
+        </main>
+    </div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js"></script>
+    <script src="../../search/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <title>Monitoring mysql/mariadb &mdash; not name</title>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:400,700">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css">
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css">
+    <link rel="stylesheet" href="../../css/theme.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script> 
+</head>
+
+<body ontouchstart="">
+    <div id="container">
+        <aside>
+            <div class="home">
+                <div class="title">
+                    <button class="hamburger"></button>
+                    <a href="../.." class="site-name"> not name</a>
+                </div>
+                <div class="search">
+                    <div role="search">
+    <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+        <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+    </form>
+</div>
+                </div>
+            </div>
+            <nav class="nav">
+                <ul class="root">
+                    <li class="toctree-l1"><button class="section nav-item">Zabbix</button>
+<ul class="subnav">
+    <li class="toctree-l2"><a class="nav-item" href="../Partitioning/">Partitioning with external script for mysql/mariadb database</a></li>
+    <li class="toctree-l2"><a class="nav-item" href="../SSO/">SSO in zabbix</a></li>
+    <li class="toctree-l2 current"><a class="nav-item current" href="./">Monitoring mysql/mariadb</a>
+<ul class="subnav">
+</ul></li>
+    <li class="toctree-l2"><a class="nav-item" href="../zabbix-agent/">install [zabbix-agent]</a></li>
+    <li class="toctree-l2"><a class="nav-item" href="../zabbix-proxy/">Zabbix-proxy</a></li>
+</ul></li>
+                </ul>
+            </nav>
+            <div class="repo">
+    <div class="link">
+        <a href="https://github.com/notoriginalnik/notoriginalnik.github.io/" class="fa fa-github"> GitHub</a>
+    </div>
+    <div class="previous"><a href="../SSO/">&laquo; Previous</a></div>
+    <div class="next"><a href="../zabbix-agent/">Next &raquo;</a></div>
+</div>
+        </aside>
+        <div id="spacer"><button class="arrow"></button></div>
+        <main>
+            <div class="home-top">
+                <button class="hamburger"></button>
+                <a href="../.." class="site-name"> not name</a>
+            </div>
+            <div id="main">
+                <nav class="breadcrumbs">
+<ul>
+    <li>Zabbix</li>
+</ul>
+</nav>
+                <div id="content"><h1 id="monitoring-mysqlmariadb">Monitoring mysql/mariadb</h1>
+<p>[Standard template] uses keys like mysql.ping ["{$ MYSQL.HOST}", "{$ MYSQL.PORT}"].
+This may be useful if zabbix-agent is not on the same host with the base, or if the port differs from the standard one on the base. In the usual case, it seems to me an unnecessary complication.</p>
+<p>A small addition to the installation from the link above:</p>
+<p>After creating a user in mysql and distributing rights to it, remember to write <code>flush privileges;</code>.
+The file for connecting to mysql must be available zabbix, do <code>chmod 440 / var / lib / zabbix / .my.cnf</code>.
+If you do chmod 777 with all your heart, then it will refuse to take data from there.
+It can be thrown anywhere, in the same / etc / zabbix for example, since anyway, you will have to specify the path to it in the UserParameter.</p>
+<p>It is also worth making zabbix the owner of these folders:
+<code>sh
+chown -R zabbix: zabbix / etc / zabbix &amp;&amp; chown -R zabbix: zabbix / var / lib / zabbix</code>,
+If not the standard <code>mariadb</code> is installed on Centos, but for example<code>rh-mariadb102-mariadb</code>, then the mysql and mysqladmin utilities will not be in <code>/ usr / bin /</code> but <code>/ opt / rh / rh-mariadb102 / root / usr / bin</code>.
+Therefore, when using UserParameter in the agent config,
+ besides HOME, you also need to add PATH or write the full path to the utility:
+<code>UserParameter = mysql.ping, HOME = / var / lib / zabbix PATH =" $ PATH: / opt / rh / rh-mariadb102 / root / usr / bin "mysqladmin ping</code>.
+Alternatively, you can install the same package with the usual mariadb =)
+It was not possible to add the path through /etc/profile.d/ or / etc / environment.
+You can also try to make zabbix a regular user and add PATH = $ {PATH}: / opt / rh / rh-mariadb102 / root / usr / bin to .bashrc
+An attempt to fix the systemd unit and start the agent from another user gave nothing ... <a href="https://www.golinuxcloud.com/run-systemd-service-specific-user-group-linux/">1</a></p>
+<p>On a crutch, you can see $ PATH or printenv from zabbix by adding <code>Server 127.0.0.1</code> to the agent config:</p>
+<pre><code class="language-sh">yum install -y zabbix-get
+echo &quot;UserParameter=test1, echo \$PATH&quot; &gt;&gt; /etc/zabbix/zabbix_agentd.d/userparameter_mysql.conf 
+zabbix_get -s 127.0.0.1 -p 10050 -k test1
+</code></pre></div>
+                <footer>
+    <div class="footer-buttons">
+        <div class="previous"><a href="../SSO/" title="SSO in zabbix"><span>Previous</span></a></div>
+        <div class="next"><a href="../zabbix-agent/" title="install [zabbix-agent]"><span>Next</span></a></div>
+    </div>
+    <div class="footer-note">
+        <p>
+            Built with <a href="http://www.mkdocs.org">MkDocs</a> using
+            <a href="https://github.com/daizutabi/mkdocs-ivory">Ivory theme</a>.
+        </p>
+    </div>
+</footer>
+            </div>
+        </main>
+    </div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js"></script>
+    <script src="../../search/main.js"></script>
+</body>
+
+</html>
