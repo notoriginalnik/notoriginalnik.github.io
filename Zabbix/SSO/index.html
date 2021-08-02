@@ -52,6 +52,7 @@
 <li class="toctree-l3"><a class="nav-item toc" href="#debug">debug</a></li>
 <li class="toctree-l3"><a class="nav-item toc" href="#some-links">Some links</a></li>
 </ul></li>
+    <li class="toctree-l2"><a class="nav-item" href="../mariadb/">Install mariadb node of galera + haproxy + keepalived</a></li>
     <li class="toctree-l2"><a class="nav-item" href="../mysql_monitoring/">Monitoring mysql/mariadb</a></li>
     <li class="toctree-l2"><a class="nav-item" href="../zabbix-agent/">install [zabbix-agent]</a></li>
     <li class="toctree-l2"><a class="nav-item" href="../zabbix-proxy/">Zabbix-proxy</a></li>
@@ -63,7 +64,7 @@
         <a href="https://github.com/notoriginalnik/notoriginalnik.github.io/" class="fa fa-github"> GitHub</a>
     </div>
     <div class="previous"><a href="../Partitioning/">&laquo; Previous</a></div>
-    <div class="next"><a href="../mysql_monitoring/">Next &raquo;</a></div>
+    <div class="next"><a href="../mariadb/">Next &raquo;</a></div>
 </div>
         </aside>
         <div id="spacer"><button class="arrow"></button></div>
@@ -79,6 +80,12 @@
 </ul>
 </nav>
                 <div id="content"><h1 id="sso-in-zabbix">SSO in zabbix</h1>
+<ol>
+<li>single sign-on (SSO)</li>
+<li>SSL (Secure Sockets Layer - the level of protected cookes) is a cryptographic protocol for a safe connection.
+From version 3.0 SSL replaced TLS (Transport Layer Security - transport level safety), but the name of the previous version has taken place.
+Therefore, today under SSL most often implies TLS. </li>
+</ol>
 <h2 id="ldapldaps">LDAP/LDAPS</h2>
 <p>Let us configure LDAP authentication in Zabbix. In the Zabbix frontend, go to the LDAP settings tab in Administration -&gt; Authentication.</p>
 <p>Check Enable LDAP authentication and fill in the following fields:</p>
@@ -97,8 +104,16 @@ update zabbix.config set authentication_type='0' where configid='1?;</p>
 <p>Create A record in dns and user in AD users, then:</p>
 <pre><code class="language-cmd">ktpass -princ HTTP/zabbix.domain.local@DOMAIN.LOCAL -mapuser zabbix@DOMAIN.LOCAL -crypto all -pass VeryStrongPASS!!! -ptype KRB5_NT_PRINCIPAL -out my.keytab
 </code></pre>
+<p>If we want LDAPS, there need some settings on our DC:
+https://social.technet.microsoft.com/wiki/contents/articles/2980.ldap-over-ssl-ldaps-certificate.aspx</p>
+<p>WARNING: do not user IP addresses instead of hostnames/FQDNs, the value in LDAP host field must match what the server's certificate was issued for!
+After transfer ca.cer on zabbix server convert cer extension to pem:</p>
+<pre><code class="language-sh">openssl x509 -inform der -in ca-01.cer -out ca-01.pem
+mv /tmp/ca-01.pem /etc/pki/ca-trust/source/anchors/
+update-ca-trust
+</code></pre>
 <h2 id="kerberos">Kerberos</h2>
-<p>For Centos:</p>
+<p>For <a href="https://www.zabbix.com/documentation/current/manual/appendix/items/kerberos">Centos</a>:</p>
 <pre><code class="language-sh">yum install krb5-workstation krb5-libs krb5-auth-dialog mod_auth_kerb ntp ntpdate -y
 ntpdate DC1.domain.local
 vi /etc/krb5.conf
@@ -146,15 +161,16 @@ For apache add next block in /etc/httpd/conf.d/zabbix.conf:</p>
 <h2 id="browser">Browser</h2>
 <p>For Internet Explorer to use Kerberos authentication on Zabbix, we will have to add its URL to Local Intranet sites.
 Google Chrome uses Internet Explorer settings, so we do not need to configure it separately.
-i. Open Options -&gt; Security in the IE.
-ii. Click Sites in the Local intranet, check the options shown in the screenshot below, and click Advanced:
-iii. Later, enter the Zabbix server URL.
-iv. Then, go to the Advanced tab and check Enable Integrated Windows Authentication.
-v. Also, we can also put Zabbix URL to the Local Intranet zone using the Group Policies (Computer Configuration -&gt; Administrative Templates -&gt; Windows Components -&gt; Internet Explorer -&gt; Internet Control Panel -&gt; Security Page -&gt; Site to Zone Assignment List. Use zone code 1 for intranet sites).
-vi. Add the URL of the Zabbix server to the following parameters of about:config for Mozilla Firefox:</p>
-<p>network.automatic-ntlm-auth.trusted-uris</p>
-<p>network.negotiate-auth.delegation-uris</p>
-<p>network.negotiate-auth.trusted-uris</p>
+1. Open Options -&gt; Security in the IE.
+1. Click Sites in the Local intranet, check the options shown in the screenshot below, and click Advanced:
+1. Later, enter the Zabbix server URL.
+1. Then, go to the Advanced tab and check Enable Integrated Windows Authentication.
+1. Add the URL of the Zabbix server to the following parameters of about:config for Mozilla Firefox:</p>
+<pre><code>network.automatic-ntlm-auth.trusted-uris
+network.negotiate-auth.delegation-uris
+network.negotiate-auth.trusted-uris
+</code></pre>
+<p>Also, we can also put Zabbix URL to the Local Intranet zone using the <a href="https://1cloud.ru/help/windows/gruppovye-politiki-active-directory">Group Policies</a> (Computer Configuration -&gt; Administrative Templates -&gt; Windows Components -&gt; Internet Explorer -&gt; Internet Control Panel -&gt; Security Page -&gt; Site to Zone Assignment List. Use zone code 1 for intranet sites).</p>
 <h2 id="debug">debug</h2>
 <h3 id="kerberos-authentication-debugging-troubleshooting-in-apache">Kerberos Authentication Debugging &amp; Troubleshooting in Apache</h3>
 <p>If we have any issues, enable debug mode in apache:
@@ -209,18 +225,25 @@ GSS-API token of length XXX bytes will be sent back</p>
 </code></pre>
 <p>Make sure you're typing the login in correct case. They also have to match in the keytab file.</p>
 <h2 id="some-links">Some links</h2>
-<p>https://plugins.miniorange.com/guide-to-setup-kerberos-single-sign-sso
-https://www.drupal.org/project/ldap/issues/2123615
-https://www.zabbix.com/documentation/current/manual/appendix/items/kerberos
-https://gist.github.com/andersevenrud/53920c3ef91c5e11c939fce5ca17af3b
+<p>Nice one http://woshub.com/zabbix-single-sign-sso-authentication-ldap-active-directory/</p>
+<h3 id="for-debugging">For debugging</h3>
+<p>https://gist.github.com/andersevenrud/53920c3ef91c5e11c939fce5ca17af3b
+https://plugins.miniorange.com/guide-to-setup-kerberos-single-sign-sso
 https://www.drupal.org/project/ldap/issues/2123615
 https://jakondo.ru/integratsiya-zabbix-s-active-directory-nastrojka-prozrachnoj-autentifikatsii-sso-single-sign-on/
-https://jakondo.ru/nastrojka-sso-single-sign-on-avtorizatsii-na-apache-v-active-directory-debian-8-jessie-ubuntu-server-14-04/
-http://woshub.com/zabbix-single-sign-sso-authentication-ldap-active-directory/</p></div>
+https://jakondo.ru/nastrojka-sso-single-sign-on-avtorizatsii-na-apache-v-active-directory-debian-8-jessie-ubuntu-server-14-04/</p>
+<h3 id="ldaps">LDAPS</h3>
+<ol>
+<li>https://techcommunity.microsoft.com/t5/sql-server/step-by-step-guide-to-setup-ldaps-on-windows-server/ba-p/385362</li>
+<li>https://winitpro.ru/index.php/2014/10/02/aktiviruem-ldap-over-ssl-ldaps-v-windows-server-2012-r2/</li>
+<li>https://winitpro.ru/index.php/2015/11/02/ustanovka-sertifikata-na-kompyutery-domena-s-pomoshhyu-gruppovyx-politik/</li>
+<li>https://denisitpro.wordpress.com/2019/02/02/ldaps-tls-ssl/</li>
+<li>https://bgmot.com/zabbix_secure_ldap</li>
+</ol></div>
                 <footer>
     <div class="footer-buttons">
         <div class="previous"><a href="../Partitioning/" title="Partitioning with external script for mysql/mariadb database"><span>Previous</span></a></div>
-        <div class="next"><a href="../mysql_monitoring/" title="Monitoring mysql/mariadb"><span>Next</span></a></div>
+        <div class="next"><a href="../mariadb/" title="Install mariadb node of galera + haproxy + keepalived"><span>Next</span></a></div>
     </div>
     <div class="footer-note">
         <p>
