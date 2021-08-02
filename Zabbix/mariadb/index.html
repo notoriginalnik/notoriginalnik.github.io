@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <title>Install mariadb node of galera + haproxy + keepalived &mdash; not name</title>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:400,700">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css">
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css">
+    <link rel="stylesheet" href="../../css/theme.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script> 
+</head>
+
+<body ontouchstart="">
+    <div id="container">
+        <aside>
+            <div class="home">
+                <div class="title">
+                    <button class="hamburger"></button>
+                    <a href="../.." class="site-name"> not name</a>
+                </div>
+                <div class="search">
+                    <div role="search">
+    <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+        <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+    </form>
+</div>
+                </div>
+            </div>
+            <nav class="nav">
+                <ul class="root">
+                    <li class="toctree-l1"><button class="section nav-item">Zabbix</button>
+<ul class="subnav">
+    <li class="toctree-l2"><a class="nav-item" href="../Partitioning/">Partitioning with external script for mysql/mariadb database</a></li>
+    <li class="toctree-l2"><a class="nav-item" href="../SSO/">SSO in zabbix</a></li>
+    <li class="toctree-l2 current"><a class="nav-item current" href="./">Install mariadb node of galera + haproxy + keepalived</a>
+<ul class="subnav">
+</ul></li>
+    <li class="toctree-l2"><a class="nav-item" href="../mysql_monitoring/">Monitoring mysql/mariadb</a></li>
+    <li class="toctree-l2"><a class="nav-item" href="../zabbix-agent/">install [zabbix-agent]</a></li>
+    <li class="toctree-l2"><a class="nav-item" href="../zabbix-proxy/">Zabbix-proxy</a></li>
+</ul></li>
+                </ul>
+            </nav>
+            <div class="repo">
+    <div class="link">
+        <a href="https://github.com/notoriginalnik/notoriginalnik.github.io/" class="fa fa-github"> GitHub</a>
+    </div>
+    <div class="previous"><a href="../SSO/">&laquo; Previous</a></div>
+    <div class="next"><a href="../mysql_monitoring/">Next &raquo;</a></div>
+</div>
+        </aside>
+        <div id="spacer"><button class="arrow"></button></div>
+        <main>
+            <div class="home-top">
+                <button class="hamburger"></button>
+                <a href="../.." class="site-name"> not name</a>
+            </div>
+            <div id="main">
+                <nav class="breadcrumbs">
+<ul>
+    <li>Zabbix</li>
+</ul>
+</nav>
+                <div id="content"><h1 id="install-mariadb-node-of-galera-haproxy-keepalived">Install mariadb node of galera + haproxy + keepalived</h1>
+<p>Easy playbook for this:</p>
+<pre><code>- name: INSTALLATION
+  hosts: testcluster
+  gather_facts: no
+  roles:
+#    - prerequest
+    - rh_mariadb_install
+    - firewalld
+    - haproxy_keepalived
+
+  handlers:
+    - include: handlers/main.yml
+</code></pre>
+<p>And lets go!</p>
+<details>
+  <summary>
+    j2 config for rh-mariadb102-mariadb
+  </summary>
+    <pre>
+        <code class="j2">
+
+<pre><code class="language-conf">[mysqld]
+datadir=/home/opt/rh/rh-mariadb102/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+log-error=/home/opt/rh/rh-mariadb102/log/mariadb/mariadb.log
+pid-file=/run/rh-mariadb102-mariadb/mariadb.pid
+character-set-server=utf8
+
+# network
+connect_timeout = 60
+wait_timeout = 28800
+interactive_timeout = 28800
+max_connections = 200
+max_connect_errors = 100
+max_allowed_packet = 128M
+
+event_scheduler = ON
+back_log = 50 
+
+# innodb
+default_storage_engine=InnoDB
+innodb_file_per_table = 1
+innodb_log_buffer_size = 128M
+innodb_log_file_size = 512M
+innodb_log_files_in_group = 3
+innodb_buffer_pool_size = 6G
+
+[galera]
+wsrep_on=ON
+wsrep_provider=/opt/rh/rh-mariadb102/root/usr/lib64/galera/libgalera_smm.so
+
+#U must change this after installation
+wsrep_cluster_address=gcomm://
+
+binlog_format=row
+default_storage_engine=InnoDB
+innodb_autoinc_lock_mode=2
+bind-address=0.0.0.0
+wsrep_cluster_name=&quot;Cluster&quot;
+wsrep_node_address={{ inventory_hostname }}
+wsrep_sst_method=rsync
+</code></pre>
+
+        </code>
+    </pre>
+</details>
+
+<details>
+  <summary>
+    role rh_mariadb_install:
+  </summary>
+    <pre>
+        <code class="yml">
+
+<pre><code class="language-yml">- name: Install
+  block:
+    - name: install centos-release
+      yum:
+        name: 
+          - centos-release-scl-rh
+          - centos-release-scl
+        state: present
+
+    - name: install mariadb102
+      yum:
+        name:
+        - rh-mariadb102-mariadb-server
+        - rh-mariadb102-mariadb-server-galera
+        enablerepo: centos-sclo-rh
+        state: present
+      notify:     
+        - add utf8 into mysqld section
+        - copy var in home
+        - move galera.cnf    
+
+# ansible cant create normal file in directory /etc/profile.d/
+# ansible stops on command 'scl enable rh-mariadb102' bash because that invoke subshell
+# ansible not change environmnet variables in session, even 'source /opt/rh/rh-mariadb102/enable' not work
+    - name: COPY rh-mariadb102.sh
+      copy:
+        src: &quot;{{ item.source }}&quot;
+        dest: &quot;{{ item.dest }}&quot;
+#        owner: root
+#        group: root
+      loop:
+#         - { source: 'templates/rh-mariadb102.sh', dest: '/etc/profile.d/rh-mariadb102.sh' }
+         - { source: 'templates/mysql_secure_installation.sql', dest: '/etc/my.cnf.d/mysql_secure_installation.sql' }
+#      notify:
+#        - enable rh-mariadb102 bash 
+#        - start rh-mariadb102-mariadb 
+
+    - name: COPY mariadb-server.cnf
+      template:
+        src: &quot;{{ item.source }}&quot;
+        dest: &quot;{{ item.dest }}&quot;
+        owner: root
+        group: root
+      loop:
+         - { source: 'templates/mariadb-server.j2', dest: '/etc/opt/rh/rh-mariadb102/my.cnf.d/mariadb-server.cnf' }
+
+#    - name: start rh-mariadb102-mariadb
+#      service:
+#        name: rh-mariadb102-mariadb
+#        state: started
+#        enabled: yes
+#      ignore_errors: yes
+
+#    - name: auto secure-install mysql
+#      shell: mysql -sfu root &lt; /etc/my.cnf.d/mysql_secure_installation.sql
+
+  ignore_errors: yes
+</code></pre>
+
+        </code>
+    </pre>
+</details>
+
+<details>
+  <summary>
+    role firewalld:
+  </summary>
+    <pre>
+        <code class="yml">
+
+<pre><code class="language-yml">- name: firewall
+  block:
+    - name: start firewalld
+      service:
+        name: firewalld
+        state: started
+        enabled: yes
+
+    - name: mysql firewalld
+      firewalld:
+        service: mysql
+        permanent: true
+        state: enabled
+
+    - name: ports firewalld
+      firewalld:
+        port: &quot;{{ item.port }}/tcp&quot;
+        permanent: true
+        state: enabled
+      loop:
+         - { port: 3306 }
+         - { port: 4567 }
+         - { port: 4568 }
+         - { port: 4444 }
+      notify: firewall reload
+
+
+  ignore_errors: yes
+</code></pre>
+
+        </code>
+    </pre>
+</details>
+
+<details>
+  <summary>
+    j2 config for haproxy:
+  </summary>
+    <pre>
+        <code class="j2">
+
+<pre><code class="language-conf">#The connect option specifies the maximum time to wait for a connection attempt to a VPS to succeed.
+#The client and server timeouts apply when the client or server is expected to acknowledge or send data during the TCP process. 
+#HAProxy recommends setting the client and server timeouts to the same value.
+
+The retries directive sets the number of retries to perform on a VPS after a connection failure.
+frontend mariadb
+bind {{ inventory_hostname }}:3307
+timeout connect 30m
+timeout client 3h
+timeout server 3h
+mode tcp
+default_backend mariadb_galera
+backend mariadb_galera
+balance source
+mode tcp
+option tcpka
+timeout connect 30m
+timeout client 3h
+timeout server 3h
+option mysql-check user haproxy
+server HOSTNAME IPADDRESS:3306 check weight 1
+server HOSTNAME IPADDRESS:3306 check weight 1
+server HOSTNAME IPADDRESS:3306 check weight 1
+</code></pre>
+
+        </code>
+    </pre>
+</details>
+
+<details>
+  <summary>
+    j2 config for keepalived:
+  </summary>
+    <pre>
+        <code class="j2">
+
+<pre><code class="language-conf">global_defs {
+router_id HOSTNAME
+}
+vrrp_script haproxy {
+script &quot;killall -0 haproxy&quot; 
+interval 2
+weight 2
+}
+vrrp_instance 50 {
+virtual_router_id 50
+advert_int 1
+priority 90
+state BACKUP
+interface ens192
+virtual_ipaddress {
+VIRTUAL_IPADDRESS dev ens192
+}
+track_script {
+haproxy
+}
+}
+</code></pre>
+
+        </code>
+    </pre>
+</details>
+
+<details>
+  <summary>
+    role haproxy_keepalived:
+  </summary>
+    <pre>
+        <code class="yml">
+
+<pre><code class="language-yml">- name: Install haproxy and keepalived
+  block:
+    - name: install haproxy and keepalived
+      yum:
+        name: 
+          - haproxy
+          - keepalived
+        enablerepo: centos-sclo-rh
+        state: present
+
+    - name: COPY configs
+      template:
+        src: &quot;{{ item.source }}&quot;
+        dest: &quot;{{ item.dest }}&quot;
+        owner: root
+        group: root
+      loop:
+         - { source: 'templates/keepalived.j2', dest: '/etc/keepalived/keepalived.conf' }
+         - { source: 'templates/haproxy.j2', dest: '/etc/haproxy/haproxy.cfg' }
+
+##need add two strings in /etc/sysctl.conf https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/load_balancer_administration/s1-initial-setup-forwarding-vsa
+#net.ipv4.ip_forward = 1
+#net.ipv4.ip_nonlocal_bind = 1
+##Apply changes:
+#sysctl -p
+#https://packetpushers.net/vrrp-linux-using-keepalived-2/
+  ignore_errors: yes
+</code></pre>
+
+        </code>
+    </pre>
+</details>
+
+<details>
+  <summary>
+    handlers:
+  </summary>
+    <pre>
+        <code class="yml">
+
+<pre><code>- name: save iptables
+  shell: iptables-save &gt; /etc/sysconfig/iptables
+  ignore_errors: yes
+
+- name: start zabbix-agent
+  service:
+    name: zabbix-agent
+    state: started
+  ignore_errors: yes
+
+- name: enable zabbix-agent
+  command: chkconfig zabbix-agent on
+
+- name: add utf8 into mysqld section
+  shell: sed -i '/mysqld]/a character-set-server=utf8' /etc/opt/rh/rh-mariadb102/my.cnf.d/mariadb-server.cnf
+
+- name: firewall reload
+  systemd:
+    name: firewalld
+    state: reloaded
+
+- name: move galera.cnf 
+  shell: mv /etc/opt/rh/rh-mariadb102/my.cnf.d/galera.cnf /etc/opt/rh/rh-mariadb102/my.cnf.d/galera.cnf.org
+
+#change database directory to home
+- name: copy var in home
+  shell: cp -pR /var/opt /home/opt
+
+# Not works
+#- name: enable rh-mariadb102 bash
+#  shell: /etc/profile.d/rh-mariadb102.sh
+#  shell: scl enable rh-mariadb102 bash
+#  shell: source /opt/rh/rh-mariadb102/enable
+</code></pre>
+
+        </code>
+    </pre>
+</details>
+
+<p>Use <code>scl enable rh-mariadb102 bash</code> for export evironment variables.(or <code>source /opt/rh/rh-mariadb102/enable</code>)
+For save this variables after restart, create <code>/etc/profile.d/rh-mariadb102.sh</code>.
+This file not works if created in playbook (idk why?) </p>
+<pre><code class="language-sh"># create new
+source /opt/rh/rh-mariadb102/enable
+export X_SCLS=&quot;`scl enable rh-mariadb102 'echo $X_SCLS'`&quot;
+</code></pre>
+<p>Happy end, or not</p>
+<pre><code class="language-sh"># Need for haproxy
+echo &quot;net.ipv4.ip_forward = 1&quot; &gt;&gt; /etc/sysctl.conf
+echo &quot;net.ipv4.ip_nonlocal_bind = 1&quot; &gt;&gt; /etc/sysctl.conf
+sysctl -p
+
+# Maria run
+service rh-mariadb102-mariadb start
+systemctl enable rh-mariadb102-mariadb
+mysql -sfu root &lt; /etc/my.cnf.d/mysql_secure_installation.sql
+
+#Need import database scheme and backup of database
+mkdir /backup
+yum install cifs-utils
+vi /etc/fstab
+mount -a
+zcat /backup/zabbix-server-mysql/create.sql.gz | mysql -uroot -p
+gunzip &lt; /backup/zabbix_backup_without_history.sql.gz | mysql -uroot -p
+
+# Pul all nodes in hosts
+vi /etc/hosts
+# set hostname
+hostnamectl set-hostname zabbixdb
+
+#There can be surprise with logs of maria
+mkdir /var/log/mysql
+chmod 777 /var/log/mysql
+
+# last change config to production and restart
+vi /etc/opt/rh/rh-mariadb102/my.cnf.d/mariadb-server.cnf
+service rh-mariadb102-mariadb stop
+service rh-mariadb102-mariadb start
+</code></pre></div>
+                <footer>
+    <div class="footer-buttons">
+        <div class="previous"><a href="../SSO/" title="SSO in zabbix"><span>Previous</span></a></div>
+        <div class="next"><a href="../mysql_monitoring/" title="Monitoring mysql/mariadb"><span>Next</span></a></div>
+    </div>
+    <div class="footer-note">
+        <p>
+            Built with <a href="http://www.mkdocs.org">MkDocs</a> using
+            <a href="https://github.com/daizutabi/mkdocs-ivory">Ivory theme</a>.
+        </p>
+    </div>
+</footer>
+            </div>
+        </main>
+    </div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js"></script>
+    <script src="../../search/main.js"></script>
+</body>
+
+</html>
