@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <title>linux template &mdash; not name</title>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:400,700">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css">
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css">
+    <link rel="stylesheet" href="../../css/theme.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script> 
+</head>
+
+<body ontouchstart="">
+    <div id="container">
+        <aside>
+            <div class="home">
+                <div class="title">
+                    <button class="hamburger"></button>
+                    <a href="../.." class="site-name"> not name</a>
+                </div>
+                <div class="search">
+                    <div role="search">
+    <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+        <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+    </form>
+</div>
+                </div>
+            </div>
+            <nav class="nav">
+                <ul class="root">
+                    <li class="toctree-l1"><button class="section nav-item">Zabbix</button>
+<ul class="subnav">
+    <li class="toctree-l2"><a class="nav-item" href="../Partitioning/">Partitioning with external script for mysql/mariadb database</a></li>
+    <li class="toctree-l2"><a class="nav-item" href="../SSO/">SSO in zabbix</a></li>
+    <li class="toctree-l2 current"><a class="nav-item current" href="./">linux template</a>
+<ul class="subnav">
+<li class="toctree-l3"><a class="nav-item toc" href="#discovery-rules">discovery rules</a></li>
+<li class="toctree-l3"><a class="nav-item toc" href="#items">items</a></li>
+<li class="toctree-l3"><a class="nav-item toc" href="#triggers">triggers</a></li>
+</ul></li>
+    <li class="toctree-l2"><a class="nav-item" href="../mariadb/">Install mariadb node of galera + haproxy + keepalived</a></li>
+    <li class="toctree-l2"><a class="nav-item" href="../mysql_monitoring/">Monitoring mysql/mariadb</a></li>
+    <li class="toctree-l2"><a class="nav-item" href="../zabbix-agent/">install [zabbix-agent]</a></li>
+    <li class="toctree-l2"><a class="nav-item" href="../zabbix-proxy/">Zabbix-proxy</a></li>
+</ul></li>
+                </ul>
+            </nav>
+            <div class="repo">
+    <div class="link">
+        <a href="https://github.com/notoriginalnik/notoriginalnik.github.io/" class="fa fa-github"> GitHub</a>
+    </div>
+    <div class="previous"><a href="../SSO/">&laquo; Previous</a></div>
+    <div class="next"><a href="../mariadb/">Next &raquo;</a></div>
+</div>
+        </aside>
+        <div id="spacer"><button class="arrow"></button></div>
+        <main>
+            <div class="home-top">
+                <button class="hamburger"></button>
+                <a href="../.." class="site-name"> not name</a>
+            </div>
+            <div id="main">
+                <nav class="breadcrumbs">
+<ul>
+    <li>Zabbix</li>
+</ul>
+</nav>
+                <div id="content"><h1 id="linux-template">linux template</h1>
+<p>Add link to template
+Change standart interval and add preprocessing <code>Discard unchanged</code> to all items for resources saving.</p>
+<h2 id="discovery-rules">discovery rules</h2>
+<p>First what we can do, change discovery interval for all discovery rules.
+For example from 1h to 12h or 24h, because its not critical latency.</p>
+<h3 id="mounted-filesystem-discovery">Mounted filesystem discovery</h3>
+<p>In this rule we have 5 item prototypes.
+Lets change interval from 1m to 5m.
+<code>Used disk space on {#FSNAME}</code>,<code>Free disk space on {#FSNAME}</code> and <code>Free disk space on {#FSNAME} (percentage)</code> is a duplication, so i can disable/not discover first and second.
+<code>Free disk space on {#FSNAME} (percentage)</code> more usefull, because that has trigger.
+<code>Total disk space on {#FSNAME}</code> usually that not dynamic info, bad idea to collect this with interval. So disable this item.
+Main idea, if item not have trigger - useless for monitoring.
+Best practice use zabbix inventory, zabbix api and other iventory system to store some static info like <code>Total disk space on {#FSNAME}</code>.</p>
+<h3 id="network-interface-discovery">Network interface discovery</h3>
+<p>Disable this discovery, there no triggers.
+Also we can change interval from 1m to 5m and set trend storage period to 0.</p>
+<h2 id="items">items</h2>
+<h3 id="cpu">cpu</h3>
+<p>Do not forgot change interval from 1m to what u need (5m nice for me).
+There 10 items like <code>CPU /.*/ time</code> and only one trigger for <code>CPU iowait time</code>. So u know what it mean - disable usless, either set trend storage period to 0.
+I can disable <code>Processor load (15 min average per core)</code>, because <code>Processor load (1 min average per core)</code>,<code>Processor load (1 min average per core)</code> enough for me.
+I do not use static items <code>Version of Zabbix agent running</code>,<code>Host name of Zabbix agent running</code>.</p>
+<h3 id="os">OS</h3>
+<p><code>System uptime</code> is popular item, but we can add trigger <code>{Template OS Linux:system.boottime.diff()}=1 and {Template OS Linux:system.boottime.nodata(15m)}=0</code> to <code>Host boot time</code>.
+<code>Discard unchanged</code> useless with <code>System uptime</code>, but will nice work with <code>Host boot time</code>.
+<code>Host name</code>,<code>System information</code>,<code>Maximum number of processes</code>, <code>Maximum number of opened files</code>, <code>Host local time</code> useless for me.</p>
+<h3 id="memory">memory</h3>
+<p><code>Free swap space in %</code>, <code>Available memory</code> have triggers.
+<code>Free swap space</code>, <code>Total memory</code>, <code>Total swap space</code> usless.</p>
+<h2 id="triggers">triggers</h2>
+<p>I changed invterval and added discard unchanged. Now i need to add nodata in <code>/etc/passwd has been changed on {HOST.NAME}</code>:
+<code>{Template OS Linux:vfs.file.cksum[/etc/passwd].diff(0)}&gt;0 and {Template OS Linux:vfs.file.cksum[/etc/passwd].nodata(15m)}=0</code></p>
+<p>Standart interval too low for me in <code>Disk I/O is overloaded on {HOST.NAME}</code>, i changed 5m to 10m:
+{Template OS Linux:system.cpu.util[,iowait].min(10m)}&gt;20</p>
+<p>Standart value in <code>Too many processes on {HOST.NAME}</code> too low, so i changed this to 1300^
+{Template OS Linux:proc.num[].avg(5m)}&gt;1300</p></div>
+                <footer>
+    <div class="footer-buttons">
+        <div class="previous"><a href="../SSO/" title="SSO in zabbix"><span>Previous</span></a></div>
+        <div class="next"><a href="../mariadb/" title="Install mariadb node of galera + haproxy + keepalived"><span>Next</span></a></div>
+    </div>
+    <div class="footer-note">
+        <p>
+            Built with <a href="http://www.mkdocs.org">MkDocs</a> using
+            <a href="https://github.com/daizutabi/mkdocs-ivory">Ivory theme</a>.
+        </p>
+    </div>
+</footer>
+            </div>
+        </main>
+    </div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js"></script>
+    <script src="../../search/main.js"></script>
+</body>
+
+</html>

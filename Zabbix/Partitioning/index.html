@@ -47,6 +47,7 @@
 <li class="toctree-l3"><a class="nav-item toc" href="#how-to-use-script">How to use script</a></li>
 </ul></li>
     <li class="toctree-l2"><a class="nav-item" href="../SSO/">SSO in zabbix</a></li>
+    <li class="toctree-l2"><a class="nav-item" href="../linux_template/">linux template</a></li>
     <li class="toctree-l2"><a class="nav-item" href="../mariadb/">Install mariadb node of galera + haproxy + keepalived</a></li>
     <li class="toctree-l2"><a class="nav-item" href="../mysql_monitoring/">Monitoring mysql/mariadb</a></li>
     <li class="toctree-l2"><a class="nav-item" href="../zabbix-agent/">install [zabbix-agent]</a></li>
@@ -185,6 +186,7 @@ ALTER TABLE `history_str` PARTITION BY RANGE( clock ) (
 </details>
 
 <h2 id="how-to-use-script">How to use script</h2>
+<p>You can use <a href="https://bestmonitoringtools.com/zabbix-partitioning-tables-on-mysql-database/">another script</a>.</p>
 <pre><code class="language-sh">yum install -y perl-Sys-Syslog
 yum install -y perl-DateTime-TimeZone
 chmod +x /etc/cron.daily/zabbix-partition

@@ -52,6 +52,7 @@
 <li class="toctree-l3"><a class="nav-item toc" href="#debug">debug</a></li>
 <li class="toctree-l3"><a class="nav-item toc" href="#some-links">Some links</a></li>
 </ul></li>
+    <li class="toctree-l2"><a class="nav-item" href="../linux_template/">linux template</a></li>
     <li class="toctree-l2"><a class="nav-item" href="../mariadb/">Install mariadb node of galera + haproxy + keepalived</a></li>
     <li class="toctree-l2"><a class="nav-item" href="../mysql_monitoring/">Monitoring mysql/mariadb</a></li>
     <li class="toctree-l2"><a class="nav-item" href="../zabbix-agent/">install [zabbix-agent]</a></li>
@@ -64,7 +65,7 @@
         <a href="https://github.com/notoriginalnik/notoriginalnik.github.io/" class="fa fa-github"> GitHub</a>
     </div>
     <div class="previous"><a href="../Partitioning/">&laquo; Previous</a></div>
-    <div class="next"><a href="../mariadb/">Next &raquo;</a></div>
+    <div class="next"><a href="../linux_template/">Next &raquo;</a></div>
 </div>
         </aside>
         <div id="spacer"><button class="arrow"></button></div>
@@ -84,7 +85,8 @@
 <li>single sign-on (SSO)</li>
 <li>SSL (Secure Sockets Layer - the level of protected cookes) is a cryptographic protocol for a safe connection.
 From version 3.0 SSL replaced TLS (Transport Layer Security - transport level safety), but the name of the previous version has taken place.
-Therefore, today under SSL most often implies TLS. </li>
+Therefore, today under SSL most often implies TLS.</li>
+<li>Works only with using domain name.</li>
 </ol>
 <h2 id="ldapldaps">LDAP/LDAPS</h2>
 <p>Let us configure LDAP authentication in Zabbix. In the Zabbix frontend, go to the LDAP settings tab in Administration -&gt; Authentication.</p>
@@ -97,8 +99,8 @@ Bind DN: CN=zabbix,OU=Users,DC=domain,DC=local
 </code></pre>
 <p>If the test has been successful, save the settings, and change the authentication type in Zabbix from Internal to LDAP</p>
 <p>LDAP authentication is configured. If the LDAP server is unavailable, we will not be able to access Zabbix.</p>
-<p>after Enable HTTP authentication (HTTP Settings -&gt; Enable HTTP authentication):
-To get back to the internal authentication, we open MySQL, and run the following command:
+<p>After Enable HTTP authentication (HTTP Settings -&gt; Enable HTTP authentication):
+To get back to the internal authentication, we can open MySQL, and run the following command:
 update zabbix.config set authentication_type='0' where configid='1?;</p>
 <h2 id="dc">DC</h2>
 <p>Create A record in dns and user in AD users, then:</p>
@@ -196,10 +198,12 @@ klist -a</p>
 klist - the /etc/apache2/zabbix.keytab</p>
 <h3 id="notes">Notes</h3>
 <p>A successful request should look like:</p>
-<p>Acquiring creds for HTTP/web01@DOMAIN.NET
+<pre><code>Acquiring creds for HTTP/web01@DOMAIN.NET
 Verifying client data using KRB5 GSS-API
 Client didn't delegate us their credential
-GSS-API token of length XXX bytes will be sent back</p>
+GSS-API token of length XXX bytes will be sent back
+</code></pre>
+<p>.</p>
 <pre><code>gss_accept_sec_context() failed: An unsupported mechanism was requested (, Unknown error)
 </code></pre>
 <p>This usually means there's something wrong with the principal configuration.</p>
@@ -227,11 +231,13 @@ GSS-API token of length XXX bytes will be sent back</p>
 <h2 id="some-links">Some links</h2>
 <p>Nice one http://woshub.com/zabbix-single-sign-sso-authentication-ldap-active-directory/</p>
 <h3 id="for-debugging">For debugging</h3>
-<p>https://gist.github.com/andersevenrud/53920c3ef91c5e11c939fce5ca17af3b
-https://plugins.miniorange.com/guide-to-setup-kerberos-single-sign-sso
-https://www.drupal.org/project/ldap/issues/2123615
-https://jakondo.ru/integratsiya-zabbix-s-active-directory-nastrojka-prozrachnoj-autentifikatsii-sso-single-sign-on/
-https://jakondo.ru/nastrojka-sso-single-sign-on-avtorizatsii-na-apache-v-active-directory-debian-8-jessie-ubuntu-server-14-04/</p>
+<ol>
+<li>https://gist.github.com/andersevenrud/53920c3ef91c5e11c939fce5ca17af3b</li>
+<li>https://plugins.miniorange.com/guide-to-setup-kerberos-single-sign-sso</li>
+<li>https://www.drupal.org/project/ldap/issues/2123615</li>
+<li>https://jakondo.ru/integratsiya-zabbix-s-active-directory-nastrojka-prozrachnoj-autentifikatsii-sso-single-sign-on/</li>
+<li>https://jakondo.ru/nastrojka-sso-single-sign-on-avtorizatsii-na-apache-v-active-directory-debian-8-jessie-ubuntu-server-14-04/</li>
+</ol>
 <h3 id="ldaps">LDAPS</h3>
 <ol>
 <li>https://techcommunity.microsoft.com/t5/sql-server/step-by-step-guide-to-setup-ldaps-on-windows-server/ba-p/385362</li>
@@ -243,7 +249,7 @@ https://jakondo.ru/nastrojka-sso-single-sign-on-avtorizatsii-na-apache-v-active-
                 <footer>
     <div class="footer-buttons">
         <div class="previous"><a href="../Partitioning/" title="Partitioning with external script for mysql/mariadb database"><span>Previous</span></a></div>
-        <div class="next"><a href="../mariadb/" title="Install mariadb node of galera + haproxy + keepalived"><span>Next</span></a></div>
+        <div class="next"><a href="../linux_template/" title="linux template"><span>Next</span></a></div>
     </div>
     <div class="footer-note">
         <p>
