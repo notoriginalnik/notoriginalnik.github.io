@@ -17,7 +17,7 @@
     Site name contains the name as defined in the mkdocs.yml
   -->
   
-  <title>Monitoring mysql/mariadb - not name</title>
+  <title>MkDocs Pure Theme2 - not name</title>
   
   <!--
     You can include external assets of course, but be aware that it means the
@@ -98,7 +98,7 @@
 -->
 
 <li >
-    <a href="../Partitioning/" class="pure-menu-link">Partitioning with external script for mysql/mariadb database</a>
+    <a href="../../Zabbix/Partitioning/" class="pure-menu-link">Partitioning with external script for mysql/mariadb database</a>
 </li>
 
         
@@ -107,7 +107,7 @@
 -->
 
 <li >
-    <a href="../SSO/" class="pure-menu-link">SSO in zabbix</a>
+    <a href="../../Zabbix/SSO/" class="pure-menu-link">SSO in zabbix</a>
 </li>
 
         
@@ -116,7 +116,7 @@
 -->
 
 <li >
-    <a href="../linux_template/" class="pure-menu-link">linux template</a>
+    <a href="../../Zabbix/linux_template/" class="pure-menu-link">linux template</a>
 </li>
 
         
@@ -125,16 +125,7 @@
 -->
 
 <li >
-    <a href="../mariadb/" class="pure-menu-link">Install mariadb node of galera + haproxy + keepalived</a>
-</li>
-
-        
-            <!--
-
--->
-
-<li class="pure-menu-item">
-    <a href="./" class="pure-menu-link">Monitoring mysql/mariadb</a>
+    <a href="../../Zabbix/mariadb/" class="pure-menu-link">Install mariadb node of galera + haproxy + keepalived</a>
 </li>
 
         
@@ -143,7 +134,7 @@
 -->
 
 <li >
-    <a href="../zabbix-agent/" class="pure-menu-link">install [zabbix-agent]</a>
+    <a href="../../Zabbix/mysql_monitoring/" class="pure-menu-link">Monitoring mysql/mariadb</a>
 </li>
 
         
@@ -152,7 +143,16 @@
 -->
 
 <li >
-    <a href="../zabbix-proxy/" class="pure-menu-link">Zabbix-proxy</a>
+    <a href="../../Zabbix/zabbix-agent/" class="pure-menu-link">install [zabbix-agent]</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../Zabbix/zabbix-proxy/" class="pure-menu-link">Zabbix-proxy</a>
 </li>
 
         
@@ -173,7 +173,16 @@
 -->
 
 <li >
-    <a href="../../2022/1/" class="pure-menu-link">MkDocs Pure Theme1</a>
+    <a href="../1/" class="pure-menu-link">MkDocs Pure Theme1</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li class="pure-menu-item">
+    <a href="./" class="pure-menu-link">MkDocs Pure Theme2</a>
 </li>
 
         
@@ -182,16 +191,7 @@
 -->
 
 <li >
-    <a href="../../2022/2/" class="pure-menu-link">MkDocs Pure Theme2</a>
-</li>
-
-        
-            <!--
-
--->
-
-<li >
-    <a href="../../2022/3/" class="pure-menu-link">MkDocs Pure Theme3</a>
+    <a href="../3/" class="pure-menu-link">MkDocs Pure Theme3</a>
 </li>
 
         
@@ -208,7 +208,7 @@
 -->
 
 <li >
-    <a href="../../2022/10/1/" class="pure-menu-link">MkDocs Pure Theme1</a>
+    <a href="../10/1/" class="pure-menu-link">MkDocs Pure Theme1</a>
 </li>
 
         
@@ -217,7 +217,7 @@
 -->
 
 <li >
-    <a href="../../2022/10/2/" class="pure-menu-link">MkDocs Pure Theme2</a>
+    <a href="../10/2/" class="pure-menu-link">MkDocs Pure Theme2</a>
 </li>
 
         
@@ -226,7 +226,7 @@
 -->
 
 <li >
-    <a href="../../2022/10/3/" class="pure-menu-link">MkDocs Pure Theme3</a>
+    <a href="../10/3/" class="pure-menu-link">MkDocs Pure Theme3</a>
 </li>
 
         
@@ -326,30 +326,13 @@
 <div id="main">
   <div class="content">
     
-        <h1 id="monitoring-mysqlmariadb">Monitoring mysql/mariadb</h1>
-<p>[Standard template] uses keys like mysql.ping ["{$ MYSQL.HOST}", "{$ MYSQL.PORT}"].
-This may be useful if zabbix-agent is not on the same host with the base, or if the port differs from the standard one on the base. In the usual case, it seems to me an unnecessary complication.</p>
-<p>A small addition to the installation from the link above:</p>
-<p>After creating a user in mysql and distributing rights to it, remember to write <code>flush privileges;</code>.
-The file for connecting to mysql must be available zabbix, do <code>chmod 440 / var / lib / zabbix / .my.cnf</code>.
-If you do chmod 777 with all your heart, then it will refuse to take data from there.
-It can be thrown anywhere, in the same / etc / zabbix for example, since anyway, you will have to specify the path to it in the UserParameter.</p>
-<p>It is also worth making zabbix the owner of these folders:
-<code>sh
-chown -R zabbix: zabbix / etc / zabbix &amp;&amp; chown -R zabbix: zabbix / var / lib / zabbix</code>,
-If not the standard <code>mariadb</code> is installed on Centos, but for example<code>rh-mariadb102-mariadb</code>, then the mysql and mysqladmin utilities will not be in <code>/ usr / bin /</code> but <code>/ opt / rh / rh-mariadb102 / root / usr / bin</code>.
-Therefore, when using UserParameter in the agent config,
- besides HOME, you also need to add PATH or write the full path to the utility:
-<code>UserParameter = mysql.ping, HOME = / var / lib / zabbix PATH =" $ PATH: / opt / rh / rh-mariadb102 / root / usr / bin "mysqladmin ping</code>.
-Alternatively, you can install the same package with the usual mariadb =)
-It was not possible to add the path through /etc/profile.d/ or / etc / environment.
-You can also try to make zabbix a regular user and add PATH = $ {PATH}: / opt / rh / rh-mariadb102 / root / usr / bin to .bashrc
-An attempt to fix the systemd unit and start the agent from another user gave nothing ... <a href="https://www.golinuxcloud.com/run-systemd-service-specific-user-group-linux/">1</a></p>
-<p>On a crutch, you can see $ PATH or printenv from zabbix by adding <code>Server 127.0.0.1</code> to the agent config:</p>
-<pre><code class="language-sh">yum install -y zabbix-get
-echo &quot;UserParameter=test1, echo \$PATH&quot; &gt;&gt; /etc/zabbix/zabbix_agentd.d/userparameter_mysql.conf 
-zabbix_get -s 127.0.0.1 -p 10050 -k test1
-</code></pre>
+        <h1 id="mkdocs-pure-theme2">MkDocs Pure Theme2</h1>
+<p>This is a very basic theme for MkDocs with the goal of demonstrating all of
+the features with minimal HTML and CSS.</p>
+<h2 id="adapting-this-theme">Adapting this theme</h2>
+<p>If you want to use this theme as a base to create your own, it is best to
+download or fork the theme and start to modify it</p>
+<p>Make sure you read the MkDocs documentation regarding writing custom themes.</p>
     
     
 
@@ -364,11 +347,11 @@ zabbix_get -s 127.0.0.1 -p 10050 -k test1
     
     <div>
       
-        <a href="../mariadb/" title="Install mariadb node of galera + haproxy + keepalived">&#8592; Previous</a>
+        <a href="../1/" title="MkDocs Pure Theme1">&#8592; Previous</a>
       
       -
       
-        <a href="../zabbix-agent/" title="install [zabbix-agent]"/>Next &#8594;</a>
+        <a href="../3/" title="MkDocs Pure Theme3"/>Next &#8594;</a>
       
     </div>
     
@@ -381,7 +364,7 @@ zabbix_get -s 127.0.0.1 -p 10050 -k test1
   -->
   
   
-    <a href="https://github.com/notoriginalnik/notoriginalnik.github.io/edit/master/docs/Zabbix/mysql_monitoring.md">Edit on GitHub</a>
+    <a href="https://github.com/notoriginalnik/notoriginalnik.github.io/edit/master/docs/2022/2.md">Edit on GitHub</a>
   
   
   

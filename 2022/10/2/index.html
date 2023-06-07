@@ -1,0 +1,378 @@
+<!--
+  This Basic theme serves as an example for how to create other
+  themes by demonstrating the features with minimal HTML and CSS.
+  Comments like this will be through the code to explain briefly
+  what each feature is and point you to the MkDocs documentation
+  to find out more.
+-->
+<!DOCTYPE html>
+<head>
+  
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <!--
+    The page_title contains the title for a page as shown in the navigation.
+    Site name contains the name as defined in the mkdocs.yml
+  -->
+  
+  <title>MkDocs Pure Theme2 - not name</title>
+  
+  <!--
+    You can include external assets of course, but be aware that it means the
+    documentation may not work well offline.
+  -->
+  <link rel="stylesheet" href="../../../css/pure-min.css">
+  <link rel="stylesheet" href="../../../css/theme.css">
+
+  <!--
+    extra_ess contains paths to CSS files in the users
+    documentation directory or a list of CSS files defined in
+    their mkdocs.yml.
+
+    http://www.mkdocs.org/user-guide/configuration/#extra_css
+  -->
+   
+  
+  
+  
+  
+  
+  
+</head>
+
+<body>
+
+  <!--
+  <h1>This is an example theme for MkDocs.</h1>
+
+  <p>
+    It is designed to be read by looking at the theme HTML which is heavily
+    commented. The easiest way to do that is by
+    <strong><a href="https://github.com/mkdocs/mkdocs-basic-theme/tree/master/basic_theme">
+    looking at the source on GitHub.</a></strong>. Otherwise this is just a
+    demonstration that the theme is fully functional.
+  </p>
+
+  <hr/>
+  -->
+  <!--
+  <h2>Documentation Navigation</h2>
+  -->
+  <!--
+    Create the navigation for the documentation.
+
+    Because we don't know how many levels deep the navigation is, it needs to
+    be included in it's own file so it can be recursive. Otherwise the theme
+    can also only support a specific number of levels.
+
+    See the nav.html file for more details about how this works.
+  -->
+  
+
+<div id="layout">
+
+    <!-- Menu toggle -->
+  <h1 class="logo-text">
+	<label for="toggler">
+      <i class="fas fa-bars sidebar-toggle"></i>
+    </label>
+  </h1>
+	
+	<input type="checkbox" id="toggler" checked />
+    <div id="menu">
+      <div class="pure-menu">
+  <ul class="pure-menu-list">
+  
+    <!--
+
+-->
+
+  <li class="pure-menu-folder">
+    Zabbix
+    <ul>
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../../Zabbix/Partitioning/" class="pure-menu-link">Partitioning with external script for mysql/mariadb database</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../../Zabbix/SSO/" class="pure-menu-link">SSO in zabbix</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../../Zabbix/linux_template/" class="pure-menu-link">linux template</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../../Zabbix/mariadb/" class="pure-menu-link">Install mariadb node of galera + haproxy + keepalived</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../../Zabbix/mysql_monitoring/" class="pure-menu-link">Monitoring mysql/mariadb</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../../Zabbix/zabbix-agent/" class="pure-menu-link">install [zabbix-agent]</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../../Zabbix/zabbix-proxy/" class="pure-menu-link">Zabbix-proxy</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+  
+    <!--
+
+-->
+
+  <li class="pure-menu-folder">
+    2022
+    <ul>
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../1/" class="pure-menu-link">MkDocs Pure Theme1</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../2/" class="pure-menu-link">MkDocs Pure Theme2</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../3/" class="pure-menu-link">MkDocs Pure Theme3</a>
+</li>
+
+        
+            <!--
+
+-->
+
+  <li class="pure-menu-folder">
+    10
+    <ul>
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../1/" class="pure-menu-link">MkDocs Pure Theme1</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li class="pure-menu-item">
+    <a href="./" class="pure-menu-link">MkDocs Pure Theme2</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../3/" class="pure-menu-link">MkDocs Pure Theme3</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+        
+    </ul>
+  </li>
+
+  
+    <!--
+
+-->
+
+  <li class="pure-menu-folder">
+    2021
+    <ul>
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../../2021/" class="pure-menu-link">MkDocs Pure Theme</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+  
+    <!--
+
+-->
+
+  <li class="pure-menu-folder">
+    2020
+    <ul>
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../../2020/" class="pure-menu-link">MkDocs Pure Theme</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+  
+    <!--
+
+-->
+
+<li >
+    <a href="../../../2019-01-02/" class="pure-menu-link">MkDocs Pure Theme3</a>
+</li>
+
+  
+    <!--
+
+-->
+
+<li >
+    <a href="../../../2018-12-31/" class="pure-menu-link">MkDocs Pure Theme2</a>
+</li>
+
+  
+    <!--
+
+-->
+
+<li >
+    <a href="../../../2015-10-30/" class="pure-menu-link">MkDocs Pure Theme1</a>
+</li>
+
+  
+    <!--
+
+-->
+
+<li >
+    <a href="../../.." class="pure-menu-link">MkDocs Pure Theme</a>
+</li>
+
+  
+  </ul>
+      </div>
+    </div>
+
+
+
+
+<div id="main">
+  <div class="content">
+    
+        <h1 id="mkdocs-pure-theme2">MkDocs Pure Theme2</h1>
+<p>This is a very basic theme for MkDocs with the goal of demonstrating all of
+the features with minimal HTML and CSS.</p>
+<h2 id="adapting-this-theme">Adapting this theme</h2>
+<p>If you want to use this theme as a base to create your own, it is best to
+download or fork the theme and start to modify it</p>
+<p>Make sure you read the MkDocs documentation regarding writing custom themes.</p>
+    
+    
+
+
+
+  <!--  
+  <h2>Next and previous links</h2>
+
+    Implement the previous and next links to cycle through the pages.
+  -->
+    
+    
+    <div>
+      
+        <a href="../1/" title="MkDocs Pure Theme1">&#8592; Previous</a>
+      
+      -
+      
+        <a href="../3/" title="MkDocs Pure Theme3"/>Next &#8594;</a>
+      
+    </div>
+    
+    
+
+
+
+  <!--
+    Support repo URL
+  -->
+  
+  
+    <a href="https://github.com/notoriginalnik/notoriginalnik.github.io/edit/master/docs/2022/10/2.md">Edit on GitHub</a>
+  
+  
+  
+  Built with <a href="https://www.mkdocs.org">MkDocs</a> and <a href="https://www.mkdocs.org">Pure theme</a>
+  
+  </div>
+</div>
+
+</div>
+</body>
+</html>
