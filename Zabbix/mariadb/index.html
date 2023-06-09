@@ -80,9 +80,10 @@
     </label>
   </h1>
 	
-	<input type="checkbox" id="toggler" checked />
+	<input type="checkbox" id="toggler"/>
     <div id="menu">
       <div class="pure-menu">
+	  <a class="pure-menu-heading" href="../..">Home</a>
   <ul class="pure-menu-list">
   
     <!--
@@ -312,7 +313,7 @@
 -->
 
 <li >
-    <a href="../.." class="pure-menu-link">MkDocs Pure Theme</a>
+    <a href="../.." class="pure-menu-link">Home</a>
 </li>
 
   
@@ -668,17 +669,18 @@ service rh-mariadb102-mariadb start
 
     Implement the previous and next links to cycle through the pages.
   -->
+
     
     
-    <div>
+    <nav class="pagination">
       
-        <a href="../linux_template/" title="linux template">&#8592; Previous</a>
+        <a href="../linux_template/" class="pagination--pager" title="linux template">&laquo; Previous</a>
       
-      -
       
-        <a href="../mysql_monitoring/" title="Monitoring mysql/mariadb"/>Next &#8594;</a>
       
-    </div>
+        <a href="../mysql_monitoring/"  class="pagination--pager" title="Monitoring mysql/mariadb"/>Next &raquo;</a>
+      
+    </nav>
     
     
 
@@ -689,11 +691,11 @@ service rh-mariadb102-mariadb start
   -->
   
   
-    <a href="https://github.com/notoriginalnik/notoriginalnik.github.io/edit/master/docs/Zabbix/mariadb.md">Edit on GitHub</a>
+   Built on <a href="https://github.com/notoriginalnik/notoriginalnik.github.io">GitHub</a>
   
   
   
-  Built with <a href="https://www.mkdocs.org">MkDocs</a> and <a href="https://www.mkdocs.org">Pure theme</a>
+   with <a href="https://www.mkdocs.org">MkDocs</a> and <a href="https://github.com/notoriginalnik/mkdocs-pure">Pure theme</a>
   
   </div>
 </div>

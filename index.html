@@ -17,7 +17,7 @@
     Site name contains the name as defined in the mkdocs.yml
   -->
   
-  <title>MkDocs Pure Theme - not name</title>
+  <title>Home - not name</title>
   
   <!--
     You can include external assets of course, but be aware that it means the
@@ -80,9 +80,10 @@
     </label>
   </h1>
 	
-	<input type="checkbox" id="toggler" checked />
+	<input type="checkbox" id="toggler"/>
     <div id="menu">
       <div class="pure-menu">
+	  <a class="pure-menu-heading" href=".">Home</a>
   <ul class="pure-menu-list">
   
     <!--
@@ -312,7 +313,7 @@
 -->
 
 <li class="pure-menu-item">
-    <a href="." class="pure-menu-link">MkDocs Pure Theme</a>
+    <a href="." class="pure-menu-link">Home</a>
 </li>
 
   
@@ -326,40 +327,34 @@
 <div id="main">
   <div class="content">
     
-        <h1 id="mkdocs-pure-theme">MkDocs Pure Theme</h1>
-<p>This is a very basic theme for MkDocs with the goal of demonstrating all of
-the features with minimal HTML and CSS.</p>
-<p>Adapting this theme</p>
-<p>If you want to use this theme as a base to create your own, it is best to
-download or fork the theme and start to modify it</p>
-<p>Make sure you read the MkDocs documentation regarding writing custom themes.</p>
+        
     
     
 	<hr/>
-<ul class="pure-menu-list">
+<ul class="pure-tag-list">
     
     
-<li class="pure-menu-item">
+<!--<li class="pure-menu-item">-->
     <a href=".#Zabbix" class="pure-menu-link">Zabbix</a>
-</li>
+<!--</li>-->
     
     
     
-<li class="pure-menu-item">
+<!--<li class="pure-menu-item">-->
     <a href=".#2022" class="pure-menu-link">2022</a>
-</li>
+<!--</li>-->
     
     
     
-<li class="pure-menu-item">
+<!--<li class="pure-menu-item">-->
     <a href=".#2021" class="pure-menu-link">2021</a>
-</li>
+<!--</li>-->
     
     
     
-<li class="pure-menu-item">
+<!--<li class="pure-menu-item">-->
     <a href=".#2020" class="pure-menu-link">2020</a>
-</li>
+<!--</li>-->
     
     
     
@@ -380,9 +375,10 @@ download or fork the theme and start to modify it</p>
 
                 	
 
-
-	    <h3 id=Zabbix>Zabbix<h3/>
-
+  <li class="pure-menu-folder">
+    	<section class="post">
+	    <h2 id=Zabbix >Zabbix</h2>
+		                </section>
     <ul>
         
             	
@@ -394,7 +390,7 @@ download or fork the theme and start to modify it</p>
                     <div class="post-description">
                         <p>
 						<a href="Zabbix/zabbix-proxy/" class="post-link">
-						Zabbix/zabbix-proxy/
+						<!--Zabbix/zabbix-proxy/-->
 						<h1 id="zabbix-proxy">Zabbix-proxy</h1>
 <h2 id="install">Install</h2>
 <pre><code class="language-sh">rpm --import http:/repo.zabbix.com/RPM-GPG-KEY-ZABBIX
@@ -422,7 +418,7 @@ systemctl enable mariadb &amp;&amp; systemctl start mariadb
                     <div class="post-description">
                         <p>
 						<a href="Zabbix/zabbix-agent/" class="post-link">
-						Zabbix/zabbix-agent/
+						<!--Zabbix/zabbix-agent/-->
 						<h1 id="install-zabbix-agent">install <a href="https:/www.zabbix.com/documentation/current/manual/concepts/agent">zabbix-agent</a></h1>
 <p>Go in <a href="https:/repo.zabbix.com/zabbix/">repo</a> for actual version of rpm (example Centos 7) :</p>
 <pre><code class="language-sh">rpm -ivh https:/repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm 
@@ -444,7 +440,7 @@ yum -y install zabbix-agen...
                     <div class="post-description">
                         <p>
 						<a href="Zabbix/mysql_monitoring/" class="post-link">
-						Zabbix/mysql_monitoring/
+						<!--Zabbix/mysql_monitoring/-->
 						<h1 id="monitoring-mysqlmariadb">Monitoring mysql/mariadb</h1>
 <p>[Standard template] uses keys like mysql.ping ["{$ MYSQL.HOST}", "{$ MYSQL.PORT}"].
 This may be useful if zabbix-agent is not on the same host with the base, or if the port differs from the standard one on the base. In the usual case, it seems to me an unnecessary complication.</p>
@@ -466,7 +462,7 @@ This may be useful if zabbix-agent is not on the same host with the base, or if 
                     <div class="post-description">
                         <p>
 						<a href="Zabbix/mariadb/" class="post-link">
-						Zabbix/mariadb/
+						<!--Zabbix/mariadb/-->
 						<h1 id="install-mariadb-node-of-galera-haproxy-keepalived">Install mariadb node of galera + haproxy + keepalived</h1>
 <p>Easy playbook for this:</p>
 <pre><code>- name: INSTALLATION
@@ -500,7 +496,7 @@ This may be useful if zabbix-agent is not on the same host with the base, or if 
                     <div class="post-description">
                         <p>
 						<a href="Zabbix/linux_template/" class="post-link">
-						Zabbix/linux_template/
+						<!--Zabbix/linux_template/-->
 						<h1 id="linux-template">linux template</h1>
 <p><a href="https:/github.com/notoriginalnik/my/blob/main/zabbix_templates/linux_template.xml">Link to template</a>
 Change standart interval and add preprocessing <code>Discard unchanged</code> to all items for resources saving.</p>
@@ -524,7 +520,7 @@ Change standart interval and add preprocessing <code>Discard unchanged</code> to
                     <div class="post-description">
                         <p>
 						<a href="Zabbix/SSO/" class="post-link">
-						Zabbix/SSO/
+						<!--Zabbix/SSO/-->
 						<h1 id="sso-in-zabbix">SSO in zabbix</h1>
 <ol>
 <li>single sign-on (SSO)</li>
@@ -549,7 +545,7 @@ Therefore, today under SSL most often implies TLS.</li>
                     <div class="post-description">
                         <p>
 						<a href="Zabbix/Partitioning/" class="post-link">
-						Zabbix/Partitioning/
+						<!--Zabbix/Partitioning/-->
 						<h1 id="partitioning-with-external-script-for-mysqlmariadb-database">Partitioning with external script for mysql/mariadb database</h1>
 <h2 id="preparation">Preparation</h2>
 <p>If your database stored in one file (example /var/lib/mysql/ibdata), you need activate  innodb_file_per_table option in mysql config.</p>
@@ -563,23 +559,24 @@ Therefore, today under SSL most often implies TLS.</li>
 
         
     </ul>
-
+  </li>
 
 
     
 
                 	
 
-
-	    <h3 id=2022>2022<h3/>
-
+  <li class="pure-menu-folder">
+    	<section class="post">
+	    <h2 id=2022 >2022</h2>
+		                </section>
     <ul>
         
             	
 
   <li class="pure-menu-folder">
     	<section class="post">
-	    <h3 id=10 >10<h3/>
+	    <h2 id=10 >10</h2>
 		                </section>
     <ul>
         
@@ -592,7 +589,7 @@ Therefore, today under SSL most often implies TLS.</li>
                     <div class="post-description">
                         <p>
 						<a href="2022/10/3/" class="post-link">
-						2022/10/3/
+						<!--2022/10/3/-->
 						<h1 id="mkdocs-pure-theme3">MkDocs Pure Theme3</h1>
 <p>This is a very basic theme for MkDocs with the goal of demonstrating all of
 the features with minimal HTML and CSS.</p>
@@ -617,7 +614,7 @@ download or fork the theme and start to modify it</p>
                     <div class="post-description">
                         <p>
 						<a href="2022/10/2/" class="post-link">
-						2022/10/2/
+						<!--2022/10/2/-->
 						<h1 id="mkdocs-pure-theme2">MkDocs Pure Theme2</h1>
 <p>This is a very basic theme for MkDocs with the goal of demonstrating all of
 the features with minimal HTML and CSS.</p>
@@ -642,7 +639,7 @@ download or fork the theme and start to modify it</p>
                     <div class="post-description">
                         <p>
 						<a href="2022/10/1/" class="post-link">
-						2022/10/1/
+						<!--2022/10/1/-->
 						<h1 id="mkdocs-pure-theme1">MkDocs Pure Theme1</h1>
 <p>This is a very basic theme for MkDocs with the goal of demonstrating all of
 the features with minimal HTML and CSS.</p>
@@ -671,7 +668,7 @@ download or fork the theme and start to modify it</p>
                     <div class="post-description">
                         <p>
 						<a href="2022/3/" class="post-link">
-						2022/3/
+						<!--2022/3/-->
 						<h1 id="mkdocs-pure-theme3">MkDocs Pure Theme3</h1>
 <p>This is a very basic theme for MkDocs with the goal of demonstrating all of
 the features with minimal HTML and CSS.</p>
@@ -696,7 +693,7 @@ download or fork the theme and start to modify it</p>
                     <div class="post-description">
                         <p>
 						<a href="2022/2/" class="post-link">
-						2022/2/
+						<!--2022/2/-->
 						<h1 id="mkdocs-pure-theme2">MkDocs Pure Theme2</h1>
 <p>This is a very basic theme for MkDocs with the goal of demonstrating all of
 the features with minimal HTML and CSS.</p>
@@ -721,7 +718,7 @@ download or fork the theme and start to modify it</p>
                     <div class="post-description">
                         <p>
 						<a href="2022/1/" class="post-link">
-						2022/1/
+						<!--2022/1/-->
 						<h1 id="mkdocs-pure-theme1">MkDocs Pure Theme1</h1>
 <p>This is a very basic theme for MkDocs with the goal of demonstrating all of
 the features with minimal HTML and CSS.</p>
@@ -738,16 +735,17 @@ download or fork the theme and start to modify it</p>
 
         
     </ul>
-
+  </li>
 
 
     
 
                 	
 
-
-	    <h3 id=2021>2021<h3/>
-
+  <li class="pure-menu-folder">
+    	<section class="post">
+	    <h2 id=2021 >2021</h2>
+		                </section>
     <ul>
         
             	
@@ -759,7 +757,7 @@ download or fork the theme and start to modify it</p>
                     <div class="post-description">
                         <p>
 						<a href="2021/" class="post-link">
-						2021/
+						<!--2021/-->
 						<h1 id="mkdocs-pure-theme">MkDocs Pure Theme</h1>
 <p>This is a very basic theme for MkDocs with the goal of demonstrating all of
 the features with minimal HTML and CSS.</p>
@@ -776,16 +774,17 @@ download or fork the theme and start to modify it</p>
 
         
     </ul>
-
+  </li>
 
 
     
 
                 	
 
-
-	    <h3 id=2020>2020<h3/>
-
+  <li class="pure-menu-folder">
+    	<section class="post">
+	    <h2 id=2020 >2020</h2>
+		                </section>
     <ul>
         
             	
@@ -797,7 +796,7 @@ download or fork the theme and start to modify it</p>
                     <div class="post-description">
                         <p>
 						<a href="2020/" class="post-link">
-						2020/
+						<!--2020/-->
 						<h1 id="mkdocs-pure-theme">MkDocs Pure Theme</h1>
 <p>This is a very basic theme for MkDocs with the goal of demonstrating all of
 the features with minimal HTML and CSS.</p>
@@ -814,7 +813,7 @@ download or fork the theme and start to modify it</p>
 
         
     </ul>
-
+  </li>
 
 
     
@@ -823,11 +822,12 @@ download or fork the theme and start to modify it</p>
 
 		    
                 <!-- A single blog post -->
-
+				<hr/>
+                <section class="post">
                     <div class="post-description">
                         <p>
 						<a href="2019-01-02/" class="post-link">
-						2019-01-02/
+						<!--2019-01-02/-->
 						<h1 id="mkdocs-pure-theme3">MkDocs Pure Theme3</h1>
 <p>This is a very basic theme for MkDocs with the goal of demonstrating all of
 the features with minimal HTML and CSS.</p>
@@ -839,7 +839,7 @@ download or fork the theme and start to modify it</p>
 						</a>
                         </p>
                     </div>
-
+                </section>
 			
 
 
@@ -849,11 +849,12 @@ download or fork the theme and start to modify it</p>
 
 		    
                 <!-- A single blog post -->
-
+				<hr/>
+                <section class="post">
                     <div class="post-description">
                         <p>
 						<a href="2018-12-31/" class="post-link">
-						2018-12-31/
+						<!--2018-12-31/-->
 						<h1 id="mkdocs-pure-theme2">MkDocs Pure Theme2</h1>
 <p>This is a very basic theme for MkDocs with the goal of demonstrating all of
 the features with minimal HTML and CSS.</p>
@@ -865,7 +866,7 @@ download or fork the theme and start to modify it</p>
 						</a>
                         </p>
                     </div>
-
+                </section>
 			
 
 
@@ -875,11 +876,12 @@ download or fork the theme and start to modify it</p>
 
 		    
                 <!-- A single blog post -->
-
+				<hr/>
+                <section class="post">
                     <div class="post-description">
                         <p>
 						<a href="2015-10-30/" class="post-link">
-						2015-10-30/
+						<!--2015-10-30/-->
 						<h1 id="mkdocs-pure-theme1">MkDocs Pure Theme1</h1>
 <p>This is a very basic theme for MkDocs with the goal of demonstrating all of
 the features with minimal HTML and CSS.</p>
@@ -891,7 +893,7 @@ download or fork the theme and start to modify it</p>
 						</a>
                         </p>
                     </div>
-
+                </section>
 			
 
 
@@ -917,17 +919,18 @@ download or fork the theme and start to modify it</p>
 
     Implement the previous and next links to cycle through the pages.
   -->
+
     
     
-    <div>
+    <nav class="pagination">
       
-        &#8592; Previous
+        <a href="#" class="disabled pagination--pager">&laquo; Previous</a>
       
-      -
       
-        <a href="2015-10-30/" title="MkDocs Pure Theme1"/>Next &#8594;</a>
       
-    </div>
+        <a href="2015-10-30/"  class="pagination--pager" title="MkDocs Pure Theme1"/>Next &raquo;</a>
+      
+    </nav>
     
     
 
@@ -938,11 +941,11 @@ download or fork the theme and start to modify it</p>
   -->
   
   
-    <a href="https://github.com/notoriginalnik/notoriginalnik.github.io/edit/master/docs/index.md">Edit on GitHub</a>
+   Built on <a href="https://github.com/notoriginalnik/notoriginalnik.github.io">GitHub</a>
   
   
   
-  Built with <a href="https://www.mkdocs.org">MkDocs</a> and <a href="https://www.mkdocs.org">Pure theme</a>
+   with <a href="https://www.mkdocs.org">MkDocs</a> and <a href="https://github.com/notoriginalnik/mkdocs-pure">Pure theme</a>
   
   </div>
 </div>
