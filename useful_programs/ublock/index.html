@@ -1,0 +1,511 @@
+<!--
+  This Basic theme serves as an example for how to create other
+  themes by demonstrating the features with minimal HTML and CSS.
+  Comments like this will be through the code to explain briefly
+  what each feature is and point you to the MkDocs documentation
+  to find out more.
+-->
+<!DOCTYPE html>
+<head>
+  
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <!--
+    The page_title contains the title for a page as shown in the navigation.
+    Site name contains the name as defined in the mkdocs.yml
+  -->
+  
+  <title>uBlock Origin - not name</title>
+  
+  <!--
+    You can include external assets of course, but be aware that it means the
+    documentation may not work well offline.
+  -->
+  <link rel="stylesheet" href="../../css/pure-min.css">
+  <link rel="stylesheet" href="../../css/theme.css">
+
+  <!--
+    extra_ess contains paths to CSS files in the users
+    documentation directory or a list of CSS files defined in
+    their mkdocs.yml.
+
+    http://www.mkdocs.org/user-guide/configuration/#extra_css
+  -->
+   
+  
+  
+  
+  
+  
+  
+</head>
+
+<body>
+
+  <!--
+  <h1>This is an example theme for MkDocs.</h1>
+
+  <p>
+    It is designed to be read by looking at the theme HTML which is heavily
+    commented. The easiest way to do that is by
+    <strong><a href="https://github.com/mkdocs/mkdocs-basic-theme/tree/master/basic_theme">
+    looking at the source on GitHub.</a></strong>. Otherwise this is just a
+    demonstration that the theme is fully functional.
+  </p>
+
+  <hr/>
+  -->
+  <!--
+  <h2>Documentation Navigation</h2>
+  -->
+  <!--
+    Create the navigation for the documentation.
+
+    Because we don't know how many levels deep the navigation is, it needs to
+    be included in it's own file so it can be recursive. Otherwise the theme
+    can also only support a specific number of levels.
+
+    See the nav.html file for more details about how this works.
+  -->
+  
+
+<div id="layout">
+
+    <!-- Menu toggle -->
+  <h1 class="logo-text">
+	<label for="toggler">
+      <i class="fas fa-bars sidebar-toggle"></i>
+    </label>
+  </h1>
+	
+	<input type="checkbox" id="toggler"/>
+    <div id="menu">
+      <div class="pure-menu">
+	  <a class="pure-menu-heading" href="../..">Home</a>
+  <ul class="pure-menu-list">
+  
+    <!--
+
+-->
+
+  <li class="pure-menu-folder">
+    Useful programs
+    <ul>
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../" class="pure-menu-link">useful opensource programms</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li class="pure-menu-item">
+    <a href="./" class="pure-menu-link">uBlock Origin</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+  
+    <!--
+
+-->
+
+  <li class="pure-menu-folder">
+    Zabbix
+    <ul>
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../Zabbix/Partitioning/" class="pure-menu-link">Partitioning with external script for mysql/mariadb database</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../Zabbix/SSO/" class="pure-menu-link">SSO in zabbix</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../Zabbix/linux_template/" class="pure-menu-link">linux template</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../Zabbix/mariadb/" class="pure-menu-link">Install mariadb node of galera + haproxy + keepalived</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../Zabbix/mysql_monitoring/" class="pure-menu-link">Monitoring mysql/mariadb</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../Zabbix/zabbix-agent/" class="pure-menu-link">install [zabbix-agent]</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../Zabbix/zabbix-proxy/" class="pure-menu-link">Zabbix-proxy</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+  
+    <!--
+
+-->
+
+  <li class="pure-menu-folder">
+    2022
+    <ul>
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../2022/1/" class="pure-menu-link">MkDocs Pure Theme1</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../2022/2/" class="pure-menu-link">MkDocs Pure Theme2</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../2022/3/" class="pure-menu-link">MkDocs Pure Theme3</a>
+</li>
+
+        
+            <!--
+
+-->
+
+  <li class="pure-menu-folder">
+    10
+    <ul>
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../2022/10/1/" class="pure-menu-link">MkDocs Pure Theme1</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../2022/10/2/" class="pure-menu-link">MkDocs Pure Theme2</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../2022/10/3/" class="pure-menu-link">MkDocs Pure Theme3</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+        
+    </ul>
+  </li>
+
+  
+    <!--
+
+-->
+
+  <li class="pure-menu-folder">
+    2021
+    <ul>
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../2021/" class="pure-menu-link">MkDocs Pure Theme</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+  
+    <!--
+
+-->
+
+  <li class="pure-menu-folder">
+    2020
+    <ul>
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../2020/" class="pure-menu-link">MkDocs Pure Theme</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+  
+    <!--
+
+-->
+
+<li >
+    <a href="../../2019-01-02/" class="pure-menu-link">MkDocs Pure Theme3</a>
+</li>
+
+  
+    <!--
+
+-->
+
+<li >
+    <a href="../../2018-12-31/" class="pure-menu-link">MkDocs Pure Theme2</a>
+</li>
+
+  
+    <!--
+
+-->
+
+<li >
+    <a href="../../2015-10-30/" class="pure-menu-link">MkDocs Pure Theme1</a>
+</li>
+
+  
+    <!--
+
+-->
+
+<li >
+    <a href="../.." class="pure-menu-link">Home</a>
+</li>
+
+  
+  </ul>
+      </div>
+    </div>
+
+
+
+
+<div id="main">
+  <div class="content">
+    
+        <h1 id="ublock-origin">uBlock Origin</h1>
+<p><a href="https://github.com/gorhill/uBlock">github проекта</a></p>
+<p>Цель этой заметки только ознакомить с возможностями, а подробности стоит уточнять в <a href="https://github.com/gorhill/uBlock/wiki">вики</a>.</p>
+<p>Это opensource кросс-платформенное расширение браузеров для фильтрации и блокировки рекламы/контента, 
+написанное Реймондом Хиллом на JavaScript.
+uBlock Origin поддерживают большую часть синтаксиса <a href="">фильтра Adblock Plus</a>. 
+Популярные списки фильтров EasyList и EasyPrivacy включены как подписки по умолчанию. 
+Расширения могут импортировать файлы hosts, а ряд поддерживаемых сообществом списков доступен при установке.
+Согласно политике конфиденциальности uBlock Origin: обработка персональных данных пользователей не осуществляется, 
+в отличие, например, от политик конфиденциальностей Adblock Plus или uBlock.</p>
+<p>Казалось бы это лишь расширение браузера, но столько функциональности не в каждой программе.
+uBlock Origin меняет сам принцип, "психологию" взаимодействия с контентом - 
+не сайт показывает вам все что хочет, а вы разрешаете сайту показать то что вам нужно.
+Если браузер обеспечивает графический интерфейс для гуляния по интернету, 
+то ublock дает реальный контроль над этим интерфейсом.
+Данный код хотелось бы видеть в браузере по дефолту, что пока видел только у <a href="https://librewolf.net/">LibreWolf</a>.
+В процессе пользования приходит понимание, что белые списки зачастую более правильное решение нежели черные, 
+объем регулярно посещаемых сайтов обычно невелик. Использовать же нужно и то и то.</p>
+<h2 id="main">Main</h2>
+<h3 id="rules">Rules</h3>
+<p>Из коробки у нас есть быстрый доступ наиболее важным функциям. Нажатие кнопки применяет/отменяет настройки для текущего сайта. 
+Рядом с кнопкой отбражаются срабатывания. Правила применяются поверх фильтров.</p>
+<pre><code>block/unblock all popups
+block/unblock large media
+disable/enable cosmetic filtering
+block/unblock remote fonts
+disable/enable JavaScript
+</code></pre>
+<h3 id="filters">Filters</h3>
+<p>Zapper позволяет без размышлений убрать какой то элемент, что должно хорошо работать для не очень популярных сайтов.</p>
+<p>Picker дает возможность подобрать косметический фильтр на выбор. Полистать можно ползунком или потыкав по списку. 
+Также есть preview. В отличие от zapper можно выбрать фильтр более широкого охвата, 
+что правда не всегда помогает от обфускации популярных сайтов.</p>
+<h3 id="logger">Logger</h3>
+<p>Cодержит кучу функционала, фильтры поиска и собственные настройки, что делает его очень удобным и полезным 
+если вам захочется копнуть глубоко. Базово стоит выбрать нужную вкладку.</p>
+<h2 id="settings">Settings</h2>
+<p>Все разбирать не буду, выделю интересное.</p>
+<h3 id="block-media-elements-larger-than-kb">Block media elements larger than KB</h3>
+<p>Отличный вариант заблочить все media по дефолту выставив 0KB и давать исключение доверенным сайтам.
+Ускорит загрузку новых страниц, вырубит веcьма вероятные рекламные вставки/ агрессивные баннеры.</p>
+<h3 id="block-remote-fonts">Block remote fonts</h3>
+<p>Из коробки в ОС сейчас в достатке шрифтов, скачивать новые ради какого то сайта странная затея. 
+Также популярной практикой ныне является тянуть шрифты например у гугла, а не хранить их на сервере.
+Можно заблочить такое странное поведение и даже чутка ускорить загрузку страниц.</p>
+<h3 id="disable-javascript">Disable JavaScript</h3>
+<p>JS сейчас почти повсеместно, но хорошей практикой будет разрешать его только по исключению.
+Это ускорит загрузку новых страниц, защитит от агрессивных скриптов, хотя наверняка будет ломать сайты.
+Если как итог вы даете исключение всем сайтам, то проще настрокой не пользоваться.</p>
+<h3 id="i-am-an-advanced-user">I am an advanced user</h3>
+<p>Это дает нам доступ к динамической фильтрации в окошке расширения(если не появилось нажать more):</p>
+<pre><code>all
+images
+3rd-party
+inline scripts
+1st-party scripts
+3rd-party scripts
+3rd-party frames
+Ниже вылезут все домены которые тянет сайт
+</code></pre>
+<p>Правила интересны тем что применяются поверх фильтров.
+У каждого пункта есть пара столбцов, левый применяется глобально, правый локально(для каждого сайта).
+Тыкая на края столбца можно разрешать(слева) или запрещать(справа) контент.
+images казалось бы дублирует настройки, но по сути добавляет больше гибкости.
+Здесь хорошо сразу вырубить глобально весь 3rd-party контент, если что давать сайту исключение.
+Данная настройка прекрасно ломает всякую аналитику, внешние скрипты, шрифты и прочие интеграции.
+Изменения настроек надо сохранять нажимая на значок замочка.</p>
+<h2 id="filter-list">filter list</h2>
+<p>Фильтров можно добавить очень много, но толк с этого ограниченный.
+Основная часть фильтров заточена не под рунет, тоесть вероятность их использования невелика.
+Из встроенного хорошо включить региональный фильтр - RU AdList
+Также стоит упомянуть custom фильтры, из популярных в рунете:</p>
+<ol>
+<li><a href="https://github.com/AdguardTeam/AdguardFilters/tree/master/AnnoyancesFilter">AdGuard Annoyances filter</a></li>
+<li><a href="https://github.com/AdguardTeam/AdguardFilters/tree/master/CyrillicFilters">AdGuard Russian filter</a></li>
+<li><a href="https://github.com/hant0508/uBlock-filters">Filters by hant0508</a></li>
+<li><a href="https://forums.lanik.us/viewtopic.php?t=22512-%D0%BE-%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%B5-ru-adlist-%D0%B8-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D1%8F%D1%85">RU AdList: BitBlock + Fanboy's General</a></li>
+<li><a href="https://forums.lanik.us/viewtopic.php?t=22512-%D0%BE-%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%B5-ru-adlist-%D0%B8-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D1%8F%D1%85">RU AdList: Counters</a></li>
+<li><a href="https://github.com/uBlockOrigin/uAssets">uBlock₀ filters – Resource abuse</a> чинит то что могли поломать другие фильтры</li>
+</ol>
+<p>В идеале все фильтры хорошо хотябы бегло просматривать, т.к. они могут что то ломать или быть безполезны.</p>
+<h2 id="my-filters">my filters</h2>
+<p>Здесь будет все добро, что мы натыкаем через zapper или picker, а возможно и то что не поленимся написать.
+(дать ссылку на правила)
+Наиболее актуальными для меня показались блокировки html тагов по классу и по ссылке:</p>
+<pre><code>домен##htmltag[атрибут]
+www.domain.ru##h1[class^=&quot;index-heading-&quot;]
+www.domain.ru##a[href^=&quot;/profile/campaigns?source=sidebar&quot;]
+</code></pre>
+<p>Есть встроенный валидатор, который выделяет некорректные правила и подсказывает почему вы не правы.
+Создать свои фильтры может помочь <a href="https://web.archive.org/web/20230525100757/https://adguard.com/kb/ru/general/ad-filtering/create-own-filters/">подробная статья от adguard</a></p>
+<h2 id="my-rules">my rules</h2>
+<p>Тут динамические правила разделенные на постоянные и временные(дублируют постоянные).
+Все что вы натыкаете в динамической фильтрации будет отображено здесь.
+Схема работы здесь напоминает контроль версий.</p>
+<h2 id="trusted-sites">trusted sites</h2>
+<p>Это список сайтов которым вы безоговорочно доверяете, где ublock будет отключен.
+По сути сюда будут попадать "капризные" сайты, для которых вам лень правильно настроить исключения.
+Лучше данного использования избегать, ограничивая свое доверие локальной сетью.</p>
+<h2 id="backup">backup</h2>
+<p>Если вы еще не делаете, то отличная возможность начать.
+Это избавит от необходимости настраивать ublock повторно с нуля если что случится или на другой машине.
+Есть возможность как экспортировать все настройки так и отдельно вытащить фильтры/правила.
+Интересный вариант хранить свои фильтры публично в какой то системе контроля версий и подключать к 
+ublock как custom filter.</p>
+<h2 id="umatrix">uMatrix</h2>
+<p>Если вам мало uBlock, то uMatrix, от тогоже автора, даст возможность динамически настраивать разрешения более точечно.
+Он как дублирует так и дополняет uBlock.</p>
+    
+    
+
+
+
+  <!--  
+  <h2>Next and previous links</h2>
+
+    Implement the previous and next links to cycle through the pages.
+  -->
+
+    
+    
+    <nav class="pagination">
+      
+        <a href="../" class="pagination--pager" title="useful opensource programms">&laquo; Previous</a>
+      
+      
+      
+	    <a href="#" class="pagination--pager disabled">Next &raquo;</a>
+      
+    </nav>
+    
+    
+
+
+
+  <!--
+    Support repo URL
+  -->
+  
+  
+   Built on <a href="https://github.com/notoriginalnik/notoriginalnik.github.io">GitHub</a>
+  
+  
+  
+   with <a href="https://www.mkdocs.org">MkDocs</a> and <a href="https://github.com/notoriginalnik/mkdocs-pure">Pure theme</a>
+  
+  </div>
+</div>
+
+</div>
+</body>
+</html>
