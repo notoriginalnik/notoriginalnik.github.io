@@ -1,0 +1,639 @@
+<!--
+  This Basic theme serves as an example for how to create other
+  themes by demonstrating the features with minimal HTML and CSS.
+  Comments like this will be through the code to explain briefly
+  what each feature is and point you to the MkDocs documentation
+  to find out more.
+-->
+<!DOCTYPE html>
+<head>
+  
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <!--
+    The page_title contains the title for a page as shown in the navigation.
+    Site name contains the name as defined in the mkdocs.yml
+  -->
+  
+  <title>Фильмы - not name</title>
+  
+  <!--
+    You can include external assets of course, but be aware that it means the
+    documentation may not work well offline.
+  -->
+  <link rel="stylesheet" href="../../css/pure-min.css">
+  <link rel="stylesheet" href="../../css/theme.css">
+
+  <!--
+    extra_ess contains paths to CSS files in the users
+    documentation directory or a list of CSS files defined in
+    their mkdocs.yml.
+
+    http://www.mkdocs.org/user-guide/configuration/#extra_css
+  -->
+   
+  
+  
+  
+  
+  
+  
+</head>
+
+<body>
+
+  <!--
+  <h1>This is an example theme for MkDocs.</h1>
+
+  <p>
+    It is designed to be read by looking at the theme HTML which is heavily
+    commented. The easiest way to do that is by
+    <strong><a href="https://github.com/mkdocs/mkdocs-basic-theme/tree/master/basic_theme">
+    looking at the source on GitHub.</a></strong>. Otherwise this is just a
+    demonstration that the theme is fully functional.
+  </p>
+
+  <hr/>
+  -->
+  <!--
+  <h2>Documentation Navigation</h2>
+  -->
+  <!--
+    Create the navigation for the documentation.
+
+    Because we don't know how many levels deep the navigation is, it needs to
+    be included in it's own file so it can be recursive. Otherwise the theme
+    can also only support a specific number of levels.
+
+    See the nav.html file for more details about how this works.
+  -->
+  
+
+<div id="layout">
+
+    <!-- Menu toggle -->
+  <h1 class="logo-text">
+	<label for="toggler">
+      <i class="fas fa-bars sidebar-toggle"></i>
+    </label>
+  </h1>
+	
+	<input type="checkbox" id="toggler"/>
+    <div id="menu">
+      <div class="pure-menu">
+	  <a class="pure-menu-heading" href="../..">Home</a>
+  <ul class="pure-menu-list">
+  
+    <!--
+
+-->
+
+  <li class="pure-menu-folder">
+    Кинокаталог
+    <ul>
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../%D0%9C%D1%83%D0%BB%D1%8C%D1%82%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D1%8B/" class="pure-menu-link">Мультфильмы</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li class="pure-menu-item">
+    <a href="./" class="pure-menu-link">Фильмы</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+  
+    <!--
+
+-->
+
+  <li class="pure-menu-folder">
+    Useful programs
+    <ul>
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../useful_programs/" class="pure-menu-link">useful opensource programms</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../useful_programs/ublock/" class="pure-menu-link">uBlock Origin</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+  
+    <!--
+
+-->
+
+  <li class="pure-menu-folder">
+    Zabbix
+    <ul>
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../Zabbix/Partitioning/" class="pure-menu-link">Partitioning with external script for mysql/mariadb database</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../Zabbix/SSO/" class="pure-menu-link">SSO in zabbix</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../Zabbix/linux_template/" class="pure-menu-link">linux template</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../Zabbix/mariadb/" class="pure-menu-link">Install mariadb node of galera + haproxy + keepalived</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../Zabbix/mysql_monitoring/" class="pure-menu-link">Monitoring mysql/mariadb</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../Zabbix/zabbix-agent/" class="pure-menu-link">install [zabbix-agent]</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../Zabbix/zabbix-proxy/" class="pure-menu-link">Zabbix-proxy</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+  
+    <!--
+
+-->
+
+  <li class="pure-menu-folder">
+    2022
+    <ul>
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../2022/1/" class="pure-menu-link">MkDocs Pure Theme1</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../2022/2/" class="pure-menu-link">MkDocs Pure Theme2</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../2022/3/" class="pure-menu-link">MkDocs Pure Theme3</a>
+</li>
+
+        
+            <!--
+
+-->
+
+  <li class="pure-menu-folder">
+    10
+    <ul>
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../2022/10/1/" class="pure-menu-link">MkDocs Pure Theme1</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../2022/10/2/" class="pure-menu-link">MkDocs Pure Theme2</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../2022/10/3/" class="pure-menu-link">MkDocs Pure Theme3</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+        
+    </ul>
+  </li>
+
+  
+    <!--
+
+-->
+
+  <li class="pure-menu-folder">
+    2021
+    <ul>
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../2021/" class="pure-menu-link">MkDocs Pure Theme</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+  
+    <!--
+
+-->
+
+  <li class="pure-menu-folder">
+    2020
+    <ul>
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../2020/" class="pure-menu-link">MkDocs Pure Theme</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+  
+    <!--
+
+-->
+
+<li >
+    <a href="../../2019-01-02/" class="pure-menu-link">MkDocs Pure Theme3</a>
+</li>
+
+  
+    <!--
+
+-->
+
+<li >
+    <a href="../../2018-12-31/" class="pure-menu-link">MkDocs Pure Theme2</a>
+</li>
+
+  
+    <!--
+
+-->
+
+<li >
+    <a href="../../2015-10-30/" class="pure-menu-link">MkDocs Pure Theme1</a>
+</li>
+
+  
+    <!--
+
+-->
+
+<li >
+    <a href="../.." class="pure-menu-link">Home</a>
+</li>
+
+  
+  </ul>
+      </div>
+    </div>
+
+
+
+
+<div id="main">
+  <div class="content">
+    
+        <h1 id="_1">Фильмы</h1>
+<details><summary>Cказки</summary>
+    <pre>
+#СССР
+Василиса Прекрасная 1939
+Кащей бессмертный 1944
+Каменный цветок 1946
+Золушка 1947
+Садко 1952
+Илья Муромец 1956
+Марья Искусница 1959
+Морозко 1964
+Сказка о потерянном времени 1964
+Снегурочка 1968
+Варвара - краса , длинная коса 1969
+Русла́н и Людми́ла 1972
+Иван да Марья 1974
+Финист - Ясный сокол 1975
+Обыкнове́нное чу́до 1979
+После дождичка, в четверг 1985
+Раз, два – горе не беда 1988
+#Современные
+Лесная царевна 2005
+    </pre>
+</details>
+
+<details><summary>Документальное и Псевдодокументальное</summary>
+    <pre>
+Фальшивка начинается с Ф / F For Fake 1973 - Орсон Уэллс
+Запад не оправдал их надежд. Камера смотрит в мир 1986
+Тренер Картер / Coach Carter 2005
+Мирный воин / Peaceful Warrior 2006
+Неуправляемый / Unstoppable 2010
+Бобби Фишер против всего мира / Bobby Fischer Against the World 2011
+<a color: #39f href="https://www.youtube.com/watch?v=7hFivbgIEqk">ДОМ</a> / <a color: #39f href="https://ru.wikipedia.org/wiki/%D0%94%D0%BE%D0%BC_(%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC)">Home 2009</a> / <a color: #39f href="https://www.youtube.com/watch?v=f2VgtI3xM1g">Дом. История путешествия</a> 
+Мы купили зоопарк 2011
+<a color: #39f href="https://youtu.be/K0KXbcVldJI">Интернет-мальчик: История Аарона Шварца</a> / <a color: #39f href="https://archive.org/details/TheInternetsOwnBoyTheStoryOfAaronSwartz">The Internet's Own Boy: The Story of Aaron Swartz 2014</a>
+Территория 2014 / Территория 1978
+<a color: #39f href="https://youtu.be/WvcK-8Mlygc">Белуха</a>
+<a color: #39f href="https://youtu.be/X2T0HKQPerQ">Школа Будущего 2021</a>
+    </pre>
+</details>
+<details><summary>Экранизация на тему исторических событий</summary>
+    <pre>
+#Отечественная
+Александр Невский 1938
+Иван Грозный 1944-1945 (1987)
+Тарас Бульба 1962
+Андрей Рублев 1966
+Русь изначальная 1985
+Украинская вендетта 1990
+Ермак 1996
+Ярослав. Тысячу лет назад 2010
+
+#Иностранная
+Цезарь и Клеопатра / Caesar and Cleopatra 1945
+Бен-Гур / Ben-Hur 1925, 1959
+подвиги Геракла 1958
+Клеопатра / Cleopatra 1963
+Падение Римской Империи" 1964 
+300 спартанцев 1962 / 300 спартанцев 2006 / 300 спартанцев: Расцвет империи 2014
+Фараон 1965
+Даки / Dacii 1967 ; Колонна / Columna 1968
+Приключения Одиссея / Странствия Одиссея 1954 ; Одиссей 1997
+Гладиатор / Gladiator 2000
+Римская империя: Август / Imperium: Augustus 2003
+Александр / Alexander 2004
+Троя / Troy 2004
+Новый Свет / The New World 2005
+Центурион / Centurion 2010
+Железный рыцарь / Ironclad 2010
+Атлантида Конец мира рождение легенды / Atlantis: End of a World, Birth of a Legend 2011
+Биркебейнеры / Birkebeinerne 2016
+Томирис / Tomiris 2020
+    </pre>
+</details>
+<details><summary>Художественное</summary>
+    <pre>
+Свой среди чужих, чужой среди своих 1974
+Белое солнце пустыни 1969
+Иван Васильевич меняет профессию 1973
+Земля моего детства 1986
+Граф Монте Кристо 2002
+Остров 2006
+Вкус жизни / No Reservations 2007
+Схватка / The Grey 2012
+Лучшее во мне / The Best of Me 2014
+Отель Гранд Будапешт / The Grand Budapest Hotel 2014
+Ближе, чем кажется 2015
+
+
+    </pre>
+</details>
+<details><summary>(псевдо)философия</summary>
+    <pre>
+Пробуждение жизни / Жизнь наяву / Waking Life 2001
+Помутнение / A Scanner Darkly 2006
+<a color: #39f href="https://www.youtube.com/watch?v=Fu6kqH4mvMk">ЗАМЫСЕЛ 2019</a>
+    </pre>
+</details>
+<details><summary>Научно популярные</summary>
+    <pre>
+Резонанс. Жизнь в Океане Микроволн / Resonance. Beings of Frequency 2012 [Lord32x]
+#<a color: #39f href="https://ru.wikipedia.org/wiki/%D0%9A%D1%83%D1%81%D1%82%D0%BE,_%D0%96%D0%B0%D0%BA-%D0%98%D0%B2">Жак-Ив Кусто</a>
+В мире безмолвия / Мир тишины / The Silent World 1956
+Мир без солнца / World Without Sun 1964
+Коралловые джунгли / The Savage World of the Coral Jungle 1968
+Шокирующие факты. Антарктика.
+Майкл Мур: хроника Каннского триумфа.
+в Тасмании и Новой Зеландии
+Остров мира /   Island of Peace 1988
+Повторное открытие мира - Мыс Горн. Воды ветра /  Cape Horn: Waters of the Wind 1986
+    </pre>
+</details>
+
+<details><summary>Короткометражки</summary>
+    <pre>
+Эмилия Мюллер / Emilie Muller 1994
+Следующий уровень/ <a color: #39f href="https://youtu.be/lJ5pBoiBhnc">Этажом выше</a> / Next Floor 2008
+<a color: #39f href="https://youtu.be/Yv-0Plq7Rp4">Пробуждение</a> / <a color: #39f href="https://youtu.be/bPJ5AjlPt4M">Kensho 2015</a> Aaron Paradox 
+<a color: #39f href="https://www.youtube.com/watch?v=pLtzXPuBWuE">Брокколи</a> / <a color: #39f href="https://www.ivansainzpardo.com/">Broccoli 2018</a>  
+    </pre>
+</details>
+<details><summary>Фантастика</summary>
+    <pre>
+#Властелин колец / The Lord of the Rings
+Братство Кольца / The Fellowship of the Ring 2001
+Две крепости / The Two Towers 2002
+Возвращение короля / The Return of the King 2003
+Хоббит / The Hobbit 
+Нежданное путешествие / An Unexpected Journey 2012
+Пустошь Смауга / The Desolation of Smaug 2013
+Битва пяти воинств / The Battle of the Five Armies 2014
+
+#Пираты карибского моря / Pirates of the Caribbean
+Проклятие Чёрной жемчужины / The Curse of the Black Pearl 2003
+Сундук мертвеца / Dead Man's Chest 2006
+На краю света / At World's End 2007
+
+#Хроники Нарнии / The Chronicles of Narnia
+Лев, Колдунья и Платяной шкаф / The Lion, the Witch and the Wardrobe 1988, 2005
+Принц Каспиан и плавание на „Покорителе зари“ / Prince Caspian and the Voyage of the Dawn Treader 1989
+Серебряное кресло / The Silver Chair 1990
+Принц Каспиан / Prince Caspian 2008
+Покоритель Зари / The Voyage of the Dawn Treader 2010
+
+#Звездные войны / Star wars
+
+Вилли вонка и шоколадная фабрика / Willy Wonka & the Chocolate Factor 1971 / Чарли и шоколадная фабрика 2005
+Водный мир / Waterworld 1986
+День сурка / Groundhog Day 1993
+Зеленая миля / The Green Mile 1999
+Револьвер / Revolver 2005
+Пророк / Next 2007
+Особо опасен / Wanted 2008
+Меняющие реальность / The Adjustment Bureau 2011
+Русалки: Обнаружено тело / Mermaids The body found 2011
+Джон Картер / John Carter 2012
+Параллельные миры / Upside Down 2012 
+Посвящённый / Дающий / The giver 2014
+Превосходство / Transcendence 2014
+В твоих глазах / In Your Eyes 2014
+Восхождение Юпитер / Jupiter Ascending 2015
+Земля будущего / Tomorrowland 2015
+Космос между нами / The Space Between Us 2017
+Возвышаясь над тенью / Above the shadows 2019
+
+####Антиутопии
+Нирвана / Nirvana 1997
+Матрица / The Matrix 1999; Матрица: Перезагрузка / The Matrix Reloaded 2003; Матрица: Революция / The Matrix Revolutions 2003
+Чёрная дыра / Pitch Black 2000; Хроники Риддика / The Chronicles of Riddick 2004; Риддик / Riddick 2013
+Эквилибриум / Equilibrium 2002
+Аватар / Avatar 2009
+Время / In Time 2011
+Oбливион / Oblivion 2013
+Элизиум — рай не на Земле /  Elysium 2013
+
+#####Космос
+Враг мой / Enemy Mine 1985
+Гаттака / Gattaca 1997
+К звёздам / Ad Astra 2019
+
+####Мрачное
+Таксист / Taxy driver 1976
+Чужие среди нас / They Live 1988
+Леон / Léon 1994
+адвокат дьявола / The Devil's Advocate 1997
+Тёмный город / Dark City 1998
+Куб / Cube 1997
+?Гиперку́б / Hypercube 2002
+?Куб Ноль / Cube Zero 2004
+?послезавтра 2004
+Константин / Constantine 2005
+Предложение / The Proposition 2005
+Остров / The Island 2005
+V — значит вендетта / V for Vendetta 2005
+Отважная / The brave one 2007
+Книга Илая / The Book of Eli 2009
+Район № 9 /  District 9 2009
+Потрошители / Repo man 2010
+Не отпускай меня / never let me go 2010-2011
+Пастырь / Priest  2011
+
+
+    </pre>
+</details>
+    
+    
+
+
+
+  <!--  
+  <h2>Next and previous links</h2>
+
+    Implement the previous and next links to cycle through the pages.
+  -->
+
+    
+    
+    <nav class="pagination">
+      
+        <a href="../%D0%9C%D1%83%D0%BB%D1%8C%D1%82%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D1%8B/" class="pagination--pager" title="Мультфильмы">&laquo; Previous</a>
+      
+      
+      
+	    <a href="#" class="pagination--pager disabled">Next &raquo;</a>
+      
+    </nav>
+    
+    
+
+
+
+  <!--
+    Support repo URL
+  -->
+  
+  
+   Built on <a href="https://github.com/notoriginalnik/notoriginalnik.github.io">GitHub</a>
+  
+  
+  
+   with <a href="https://www.mkdocs.org">MkDocs</a> and <a href="https://github.com/notoriginalnik/mkdocs-pure">Pure theme</a>
+  
+  </div>
+</div>
+
+</div>
+</body>
+</html>
