@@ -17,7 +17,7 @@
     Site name contains the name as defined in the mkdocs.yml
   -->
   
-  <title>install [zabbix-agent] - not name</title>
+  <title>Статическая растяжка - not name</title>
   
   <!--
     You can include external assets of course, but be aware that it means the
@@ -99,7 +99,7 @@
 -->
 
 <li >
-    <a href="../../%D0%A2%D1%80%D0%B5%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B8/%D0%A1%D0%B8%D0%BB%D0%BE%D0%B2%D1%8B%D0%B5%20%D1%82%D1%80%D0%B5%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B8/" class="pure-menu-link">Силовые тренировки</a>
+    <a href="../%D0%A1%D0%B8%D0%BB%D0%BE%D0%B2%D1%8B%D0%B5%20%D1%82%D1%80%D0%B5%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B8/" class="pure-menu-link">Силовые тренировки</a>
 </li>
 
         
@@ -108,7 +108,7 @@
 -->
 
 <li >
-    <a href="../../%D0%A2%D1%80%D0%B5%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B8/%D0%B2%D0%BE%D1%81%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5/" class="pure-menu-link">Восстановление</a>
+    <a href="../%D0%B2%D0%BE%D1%81%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5/" class="pure-menu-link">Восстановление</a>
 </li>
 
         
@@ -116,8 +116,8 @@
 
 -->
 
-<li >
-    <a href="../../%D0%A2%D1%80%D0%B5%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B8/%D1%80%D0%B0%D1%81%D1%82%D1%8F%D0%B6%D0%BA%D0%B0/" class="pure-menu-link">Статическая растяжка</a>
+<li class="pure-menu-item">
+    <a href="./" class="pure-menu-link">Статическая растяжка</a>
 </li>
 
         
@@ -219,7 +219,7 @@
 -->
 
 <li >
-    <a href="../Partitioning/" class="pure-menu-link">Partitioning with external script for mysql/mariadb database</a>
+    <a href="../../Zabbix/Partitioning/" class="pure-menu-link">Partitioning with external script for mysql/mariadb database</a>
 </li>
 
         
@@ -228,7 +228,7 @@
 -->
 
 <li >
-    <a href="../SSO/" class="pure-menu-link">SSO in zabbix</a>
+    <a href="../../Zabbix/SSO/" class="pure-menu-link">SSO in zabbix</a>
 </li>
 
         
@@ -237,7 +237,7 @@
 -->
 
 <li >
-    <a href="../linux_template/" class="pure-menu-link">linux template</a>
+    <a href="../../Zabbix/linux_template/" class="pure-menu-link">linux template</a>
 </li>
 
         
@@ -246,7 +246,7 @@
 -->
 
 <li >
-    <a href="../mariadb/" class="pure-menu-link">Install mariadb node of galera + haproxy + keepalived</a>
+    <a href="../../Zabbix/mariadb/" class="pure-menu-link">Install mariadb node of galera + haproxy + keepalived</a>
 </li>
 
         
@@ -255,16 +255,7 @@
 -->
 
 <li >
-    <a href="../mysql_monitoring/" class="pure-menu-link">Monitoring mysql/mariadb</a>
-</li>
-
-        
-            <!--
-
--->
-
-<li class="pure-menu-item">
-    <a href="./" class="pure-menu-link">install [zabbix-agent]</a>
+    <a href="../../Zabbix/mysql_monitoring/" class="pure-menu-link">Monitoring mysql/mariadb</a>
 </li>
 
         
@@ -273,7 +264,16 @@
 -->
 
 <li >
-    <a href="../zabbix-proxy/" class="pure-menu-link">Zabbix-proxy</a>
+    <a href="../../Zabbix/zabbix-agent/" class="pure-menu-link">install [zabbix-agent]</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../../Zabbix/zabbix-proxy/" class="pure-menu-link">Zabbix-proxy</a>
 </li>
 
         
@@ -447,86 +447,79 @@
 <div id="main">
   <div class="content">
     
-        <h1 id="install-zabbix-agent">install <a href="https://www.zabbix.com/documentation/current/manual/concepts/agent">zabbix-agent</a></h1>
-<p>Go in <a href="https://repo.zabbix.com/zabbix/">repo</a> for actual version of rpm (example Centos 7) :</p>
-<pre><code class="language-sh">rpm -ivh https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm 
-yum -y install zabbix-agent
-chkconfig zabbix-agent on
-</code></pre>
-<p>You can use jinja template for config of zabbix-agent <code>/etc/zabbix/zabbix_agentd.conf</code>.
-Default settings on agent (other options generally useless):</p>
-<pre><code class="language-conf">PidFile=/var/run/zabbix/zabbix_agentd.pid
-LogFile=/var/log/zabbix/zabbix_agentd.log
-LogFileSize=0
-Server={{ Proxy[hostname] }}
-ServerActive={{ Proxy[hostname] }}
-Hostname={{ Host[hostname] }} # !!!Must be like name of host in web
-Include=/etc/zabbix/zabbix_agentd.d/*.conf
-</code></pre>
-<p>Give access and starting:</p>
-<pre><code class="language-sh">iptables -I INPUT -p tcp --dport 10050 -j ACCEPT
-iptables-save &gt; /dev/null 2&gt;&amp;1
-service zabbix-agent start
-</code></pre>
-<p>If we use selinux, need allow zabbix-agent, or check that selinux disabled.
-For firewalld:</p>
-<pre><code class="language-sh">firewall-cmd --permanent --add-port=10050/tcp
-firewall-cmd --reload
-</code></pre>
-<p>You may need to create directories manually:</p>
-<pre><code class="language-sh">mkdir /var/run/zabbix &amp;&amp; chown -R zabbix:zabbix /var/run/zabbix
-mkdir /var/log/zabbix &amp;&amp; chown -R zabbix:zabbix /var/log/zabbix
-</code></pre>
-<h2 id="playbook">playbook</h2>
-<p>Example of ansible role for centos 7:</p>
-<pre><code class="language-yml">- name: Install, configure, and start zabbix-agent
-  block:
-    - name: add rpm
-      yum: name=https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm
-
-    - name: install zabbix-agent
-      yum:
-        name: zabbix-agent
-        state: present
-
-    - name: copy userparams
-      copy:
-       src: 'templates/userparams.conf'
-       dest: '/etc/zabbix/zabbix_agentd.d/userparams.conf'
-       owner: zabbix
-       group: zabbix
-
-    - name: make config
-      template:
-       src: 'templates/zabbix_agentd.j2'
-       dest: '/etc/zabbix/zabbix_agentd.conf'
-
-    - name: add line in iptables
-      command: iptables -I INPUT 5 -p tcp --dport 10050 -j ACCEPT
-
-    - name: iptables save
-      shell: iptables-save &gt; /etc/sysconfig/iptables
-
-    - name: enable zabbix-agent
-      command: chkconfig zabbix-agent on
-
-    - name: start zabbix-agent
-      service:
-        name: zabbix-agent
-        state: started
-  when: 
-    - ansible_facts['distribution'] == 'CentOS'
-    - ansible_facts['distribution_major_version'] == &quot;7&quot;
-  become: true
-  ignore_errors: yes
-</code></pre>
-<h2 id="win">win</h2>
-<p>If you <a href="https://www.zabbix.com/download_agents">downloaded</a> archive , unzip the files and put them where they should be (i put the files in c:\zabbix for example).
-Change settings Server/ServerActive/Hostname in zabbix_agentd.conf. Run cmd from admin: </p>
-<pre><code class="language-cmd">zabbix_agentd.exe -c c:\zabbix\conf\zabbix_agentd.conf --install
-zabbix_agentd.exe --start
-</code></pre>
-<p>Do not forget to add an exception to the firewall =)</p>
+        <h1 id="_1">Статическая растяжка</h1>
+<p>Делаем до расслабления тканей, примерно до 60с, после нагрузок или вечером.</p>
+<p>НИЗ</p>
+<details><summary>передняя часть бедра </summary>
+<div class="imgcrop"><img src="../stretching_images/1.jpeg"></div>
+<div class="description">Сгибаем ногу, берем ступню рукой и чуть отводим назад, сопротивляясь ногой.</div>
+</details>
+<details><summary>икры </summary>
+<div class="imgcrop"><img src="../stretching_images/2.jpg"></div>
+<div class="description">Прямой ногой встаем носком на какой то выступ, держимся руками, в обуви может быть удобнее.
+</div>
+</details>
+<details><summary>внутреняя часть бедра </summary>
+<div class="imgcrop"><img src="../stretching_images/3_1.jpg"></div>
+<div class="description">Отставляем ногу в сторону, а на другой приседаем.
+</div>
+</details>
+<details><summary>задняя и передняя часть бедра </summary>
+<div class="imgcrop"><img src="../stretching_images/4_1.jpg"></div>
+<div class="description">Делаем выпад, пытаемся сесть ниже, меняем ноги.
+</div>
+</details>
+<details><summary>нога </summary>
+<div class="imgcrop"><img src="../stretching_images/5_1.jpg"></div>
+<div class="description">Сидя тянемся к каждой ноге, вторая согнута.
+</div>
+</details>
+<details><summary>ноги </summary>
+<div class="imgcrop"><img src="../stretching_images/6_1.jpg"></div>
+<div class="description">Сидя тянемся к 2 прямым ногам.
+</div>
+</details>
+<details><summary>ягодицы </summary>
+<div class="imgcrop"><img src="../stretching_images/7_1.jpg"></div>
+<div class="description">Ложимся, сгибаем одну ногу и беремся за нее руками, вторую ногу заводим ступней на колено другой ноги, руками тянем к себе.
+</div>
+</details>
+<details><summary>камбала </summary>
+<div class="imgcrop"><img src="../stretching_images/2.jpg"></div>
+<div class="description">Согнутой ногой встаем носком на какой то выступ, держимся руками, в обуви может быть удобнее.
+</div>
+</details>
+<p>ВЕРХ</p>
+<details><summary>верх спины </summary>
+<div class="imgcrop"><img src="../stretching_images/11_1.jpg"></div>
+<div class="description">Наклоняемся корпусом до упора руками на уровне пояса.
+</div>
+</details>
+<details><summary>бицепс </summary>
+<div class="imgcrop"><img src="../stretching_images/12_1.jpg"></div>
+<div class="description">Заводим прямую руку на уровне плеч на стену, рука отводится назад, стоим боком к стене.
+</div>
+</details>
+<details><summary>трицепс </summary>
+<div class="imgcrop"><img src="../stretching_images/13_1.jpg"></div>
+<div class="description">Если не получается свести руки, берем в кисти полотенце\одежду.
+</div>
+</details>
+<details><summary>предплечья </summary>
+<div class="imgcrop"><img src="../stretching_images/14_1.jpeg"></div>
+<div class="description">Садимся на колени, выворачиваем кисти к себе, ставим их на пол, регулируем натяжение отводя корпус назад.
+</div>
+</details>
+<details><summary>трапеция1 </summary>
+<div class="imgcrop"><img src="../stretching_images/15_1.jpg"></div>
+<div class="description">Тянем рукой голову к плечу, шеей сопротивляемся, меняем сторону.
+</div>
+</details>
+<details><summary>трапеция2 </summary>
+<div class="imgcrop"><img src="../stretching_images/16_1.jpg"></div>
+<div class="description">Лежа, руками тянем голову вперед, шеей сопротивляемся.
+</div>
+</details>
     
     
 
@@ -542,11 +535,11 @@ zabbix_agentd.exe --start
     
     <nav class="pagination">
       
-        <a href="../mysql_monitoring/" class="pagination--pager" title="Monitoring mysql/mariadb">&laquo; Previous</a>
+        <a href="../%D0%B2%D0%BE%D1%81%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5/" class="pagination--pager" title="Восстановление">&laquo; Previous</a>
       
       
       
-        <a href="../zabbix-proxy/"  class="pagination--pager" title="Zabbix-proxy"/>Next &raquo;</a>
+	    <a href="#" class="pagination--pager disabled">Next &raquo;</a>
       
     </nav>
     
