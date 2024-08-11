@@ -1,6 +1,11 @@
 :root {
 /*  color-scheme: light dark;*/
   color-scheme: dark;
+  --main-bg-color: #002b36;;
+  --text-color: #eee8d5;
+  --code-color: #2aa198;
+  --details-color: #073642;
+  
   --sidebar-width: 300px;  
   --sidebar-left: -300px; /*	like  sidebar-width */
 }
@@ -284,7 +289,7 @@ input:checked ~ #main {
 }
 
 input:checked ~ #menu{
-  visibility: collapse;
+  /*visibility: collapse;*/
   left: var(--sidebar-left);  /* like animation */
 }
 
@@ -313,13 +318,26 @@ input:checked ~ #menu{
     }
 	
 */
+ 
     #menu {
-		visibility: collapse;
+		left: var(--sidebar-left);
+		/*visibility: collapse;*/
     }
 /* Toggler Functionality */
+input:checked ~ #main {
+        padding-left: var(--sidebar-left); 
+        /*left: var(--sidebar-left);*/
+}
+
+input:checked ~ #menu{
+  /*visibility: collapse;*/
+  left: 0px;  /* like animation */
+}
+/* Toggler Functionality 
 	input:checked ~ #menu{
   visibility: visible;
-}
+  left: var(--sidebar-left);
+}*/
 }
 /* 
 @media (prefers-color-scheme: dark) {
@@ -340,6 +358,7 @@ input:checked ~ #menu{
 }
 */
 /* solarized */
+/*
 @media (prefers-color-scheme: dark) {
   :root {
   --main-bg-color: #002b36;;
@@ -348,7 +367,7 @@ input:checked ~ #menu{
   --details-color: #073642;
   }
 }
-/*
+
 @media (prefers-color-scheme: light) {
   :root {
   --main-bg-color: #eee8d5;
