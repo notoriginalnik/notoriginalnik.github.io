@@ -318,7 +318,9 @@ input:checked ~ #menu{
     }
 	
 */
- 
+    .pure-tag-list a {
+		width: 48%;
+}
     #menu {
 		left: var(--sidebar-left);
 		/*visibility: collapse;*/
