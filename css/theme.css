@@ -348,6 +348,7 @@ input:checked ~ #menu{
   --details-color: #073642;
   }
 }
+/*
 @media (prefers-color-scheme: light) {
   :root {
   --main-bg-color: #eee8d5;
@@ -356,3 +357,4 @@ input:checked ~ #menu{
   --details-color: #fdf6e3;
   }
 }
+*/
