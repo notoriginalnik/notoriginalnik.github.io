@@ -219,16 +219,7 @@
 -->
 
 <li >
-    <a href="../" class="pure-menu-link">useful opensource programms</a>
-</li>
-
-        
-            <!--
-
--->
-
-<li class="pure-menu-item">
-    <a href="./" class="pure-menu-link">uBlock Origin</a>
+    <a href="../../useful_programs/" class="pure-menu-link">useful opensource programms</a>
 </li>
 
         
@@ -304,6 +295,36 @@
 
 <li >
     <a href="../../Zabbix/zabbix-proxy/" class="pure-menu-link">Zabbix-proxy</a>
+</li>
+
+        
+    </ul>
+  </li>
+
+  
+    <!--
+
+-->
+
+  <li class="pure-menu-folder">
+    Browser
+    <ul>
+        
+            <!--
+
+-->
+
+<li class="pure-menu-item">
+    <a href="./" class="pure-menu-link">uBlock Origin</a>
+</li>
+
+        
+            <!--
+
+-->
+
+<li >
+    <a href="../%D0%98%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%B0/" class="pure-menu-link">Изменение интерфейса</a>
 </li>
 
         
@@ -568,6 +589,36 @@ www.domain.ru##a[href^=&quot;/profile/campaigns?source=sidebar&quot;]
 </code></pre>
 <p>Есть встроенный валидатор, который выделяет некорректные правила и подсказывает почему вы не правы.
 Создать свои фильтры может помочь <a href="https://web.archive.org/web/20230525100757/https://adguard.com/kb/ru/general/ad-filtering/create-own-filters/">подробная статья от adguard</a></p>
+<p>Интересные примеры.</p>
+<details>
+<summary>Фильтрация выдачи поисковика</summary>
+!Соцсети
+html.duckduckgo.*##.results > div:has(a[href*="/reddit.com"])
+html.duckduckgo.*##.results > div:has(a[href*="www.instagram.com"])
+html.duckduckgo.*##.results > div:has(a[href*="/linkedin.com"])
+html.duckduckgo.*##.results > div:has(a[href*="/pinterest.com"])
+html.duckduckgo.*##.results > div:has(a[href*="/pinterest.ch"])
+html.duckduckgo.*##.results > div:has(a[href*="/pinterest.ie"])
+html.duckduckgo.*##.results > div:has(a[href*="pinterest.com.au"])
+html.duckduckgo.*##.results > div:has(a[href*="/facebook.com"])
+html.duckduckgo.*##.results > div:has(a[href*=".facebook.com"])
+html.duckduckgo.*##.results > div:has(a[href*="/twitter.com"])
+html.duckduckgo.*##.results > div:has(a[href*="/tiktok.com"])
+html.duckduckgo.*##.results > div:has(a[href*=".tiktok.com"])
+html.duckduckgo.*##.results > div:has(a[href*="/rutube.ru"])
+
+!Маркетплейсы
+html.duckduckgo.*##.results > div:has(a[href*="market.yandex.ru"])
+html.duckduckgo.*##.results > div:has(a[href*="/sbermegamarket.ru"])
+html.duckduckgo.*##.results > div:has(a[href*="www.ozon.ru"])
+html.duckduckgo.*##.results > div:has(a:is(a[href*="www.amazon."], a[href*="/amazon.de"], a[href*="/amazon.com"], a[href*="/amazon.nl"], a[href*="/amazon.ca"]))
+</details>
+
+<p>Фильтрация выдачи маркетплейса</p>
+<pre><code>!Убираем записи с долгой доставкой(которых нет в наличии)
+www.chipdip.ru##tbody &gt; .with-hover:has(span:contains(недел))
+www.chipdip.ru##tbody &gt; .with-hover:has(span:contains(По запросу))
+</code></pre>
 <h2 id="my-rules">my rules</h2>
 <p>Тут динамические правила разделенные на постоянные и временные(дублируют постоянные).
 Все что вы натыкаете в динамической фильтрации будет отображено здесь.
@@ -583,8 +634,15 @@ www.domain.ru##a[href^=&quot;/profile/campaigns?source=sidebar&quot;]
 Интересный вариант хранить свои фильтры публично в какой то системе контроля версий и подключать к 
 ublock как custom filter.</p>
 <h2 id="umatrix">uMatrix</h2>
-<p>Если вам мало uBlock, то uMatrix, от тогоже автора, даст возможность динамически настраивать разрешения более точечно.
-Он как дублирует так и дополняет uBlock.</p>
+<p>Если вам мало uBlock, то <a href="https://addons.mozilla.org/en-US/firefox/addon/umatrix/">uMatrix</a>, от тогоже автора, даст возможность динамически настраивать разрешения более точечно.
+Он как дублирует так и дополняет uBlock.
+По факту uMatrix это полноценный firewall.
+[<a href="https://github.com/gorhill/uMatrix/wiki">вики</a>]
+[<a href="https://github.com/gorhill/uMatrix">код</a>]</p>
+<h2 id="ublacklist">uBlacklist</h2>
+<p>Для более простой и удобной фильтрации поисковой выдачи есть <a href="https://addons.mozilla.org/en-US/firefox/addon/ublacklist/">uBlacklist</a>.
+[<a href="https://iorate.github.io/ublacklist/docs">инструкция</a>]
+[<a href="https://github.com/iorate/ublacklist">код</a>]</p>
     
     
 
@@ -600,11 +658,11 @@ ublock как custom filter.</p>
     
     <nav class="pagination">
       
-        <a href="../" class="pagination--pager" title="useful opensource programms">&laquo; Previous</a>
+        <a href="../../2022/10/3/" class="pagination--pager" title="MkDocs Pure Theme3">&laquo; Previous</a>
       
       
       
-        <a href="../../%D0%9A%D0%B8%D0%BD%D0%BE%D0%BA%D0%B0%D1%82%D0%B0%D0%BB%D0%BE%D0%B3/%D0%9C%D1%83%D0%BB%D1%8C%D1%82%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D1%8B/"  class="pagination--pager" title="Мультфильмы"/>Next &raquo;</a>
+        <a href="../%D0%98%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%B0/"  class="pagination--pager" title="Изменение интерфейса"/>Next &raquo;</a>
       
     </nav>
     
