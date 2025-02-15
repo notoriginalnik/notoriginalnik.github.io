@@ -17,7 +17,7 @@
     Site name contains the name as defined in the mkdocs.yml
   -->
   
-  <title>uBlock Origin - not name</title>
+  <title>Ublock - not name</title>
   
   <!--
     You can include external assets of course, but be aware that it means the
@@ -237,7 +237,7 @@
 -->
 
 <li >
-    <a href="../../useful_programs/" class="pure-menu-link">useful opensource programms</a>
+    <a href="../../useful_programs/" class="pure-menu-link">opensource programms</a>
 </li>
 
         
@@ -333,7 +333,7 @@
 -->
 
 <li class="pure-menu-item">
-    <a href="./" class="pure-menu-link">uBlock Origin</a>
+    <a href="./" class="pure-menu-link">Ublock</a>
 </li>
 
         
@@ -369,7 +369,12 @@
 <div id="main">
   <div class="content">
     
-        <h1 id="ublock-origin">uBlock Origin</h1>
+        <p><head></p>
+<style>
+p { text-indent: 25px; }
+</style>
+<p></head></p>
+<h1 id="ublock-origin">uBlock Origin</h1>
 <p><a href="https://github.com/gorhill/uBlock">github проекта</a></p>
 <p>Цель этой заметки только ознакомить с возможностями, а подробности стоит уточнять в <a href="https://github.com/gorhill/uBlock/wiki">вики</a>.</p>
 <p>Это opensource кросс-платформенное расширение браузеров для фильтрации и блокировки рекламы/контента, 
@@ -463,26 +468,29 @@ www.domain.ru##a[href^=&quot;/profile/campaigns?source=sidebar&quot;]
 <p>Интересные примеры.</p>
 <details>
 <summary>Фильтрация выдачи поисковика</summary>
-!Соцсети
-html.duckduckgo.*##.results > div:has(a[href*="/reddit.com"])
-html.duckduckgo.*##.results > div:has(a[href*="www.instagram.com"])
-html.duckduckgo.*##.results > div:has(a[href*="/linkedin.com"])
-html.duckduckgo.*##.results > div:has(a[href*="/pinterest.com"])
-html.duckduckgo.*##.results > div:has(a[href*="/pinterest.ch"])
-html.duckduckgo.*##.results > div:has(a[href*="/pinterest.ie"])
-html.duckduckgo.*##.results > div:has(a[href*="pinterest.com.au"])
-html.duckduckgo.*##.results > div:has(a[href*="/facebook.com"])
-html.duckduckgo.*##.results > div:has(a[href*=".facebook.com"])
-html.duckduckgo.*##.results > div:has(a[href*="/twitter.com"])
-html.duckduckgo.*##.results > div:has(a[href*="/tiktok.com"])
-html.duckduckgo.*##.results > div:has(a[href*=".tiktok.com"])
-html.duckduckgo.*##.results > div:has(a[href*="/rutube.ru"])
+
+<pre><code>!Соцсети
+html.duckduckgo.*##.results &gt; div:has(a[href*=&quot;/reddit.com&quot;])
+html.duckduckgo.*##.results &gt; div:has(a[href*=&quot;www.instagram.com&quot;])
+html.duckduckgo.*##.results &gt; div:has(a[href*=&quot;/linkedin.com&quot;])
+html.duckduckgo.*##.results &gt; div:has(a[href*=&quot;/pinterest.com&quot;])
+html.duckduckgo.*##.results &gt; div:has(a[href*=&quot;/pinterest.ch&quot;])
+html.duckduckgo.*##.results &gt; div:has(a[href*=&quot;/pinterest.ie&quot;])
+html.duckduckgo.*##.results &gt; div:has(a[href*=&quot;pinterest.com.au&quot;])
+html.duckduckgo.*##.results &gt; div:has(a[href*=&quot;/facebook.com&quot;])
+html.duckduckgo.*##.results &gt; div:has(a[href*=&quot;.facebook.com&quot;])
+html.duckduckgo.*##.results &gt; div:has(a[href*=&quot;/twitter.com&quot;])
+html.duckduckgo.*##.results &gt; div:has(a[href*=&quot;/tiktok.com&quot;])
+html.duckduckgo.*##.results &gt; div:has(a[href*=&quot;.tiktok.com&quot;])
+html.duckduckgo.*##.results &gt; div:has(a[href*=&quot;/rutube.ru&quot;])
 
 !Маркетплейсы
-html.duckduckgo.*##.results > div:has(a[href*="market.yandex.ru"])
-html.duckduckgo.*##.results > div:has(a[href*="/sbermegamarket.ru"])
-html.duckduckgo.*##.results > div:has(a[href*="www.ozon.ru"])
-html.duckduckgo.*##.results > div:has(a:is(a[href*="www.amazon."], a[href*="/amazon.de"], a[href*="/amazon.com"], a[href*="/amazon.nl"], a[href*="/amazon.ca"]))
+html.duckduckgo.*##.results &gt; div:has(a[href*=&quot;market.yandex.ru&quot;])
+html.duckduckgo.*##.results &gt; div:has(a[href*=&quot;/sbermegamarket.ru&quot;])
+html.duckduckgo.*##.results &gt; div:has(a[href*=&quot;www.ozon.ru&quot;])
+html.duckduckgo.*##.results &gt; div:has(a:is(a[href*=&quot;www.amazon.&quot;], a[href*=&quot;/amazon.de&quot;], a[href*=&quot;/amazon.com&quot;], a[href*=&quot;/amazon.nl&quot;], a[href*=&quot;/amazon.ca&quot;]))
+</code></pre>
+
 </details>
 
 <p>Фильтрация выдачи маркетплейса</p>
