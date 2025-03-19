@@ -17,7 +17,7 @@
     Site name contains the name as defined in the mkdocs.yml
   -->
   
-  <title>Изменение интерфейса - not name</title>
+  <title>Минералы - not name</title>
   
   <!--
     You can include external assets of course, but be aware that it means the
@@ -186,7 +186,7 @@
 -->
 
 <li >
-    <a href="../../%D0%9F%D0%B8%D1%82%D0%B0%D0%BD%D0%B8%D0%B5/%D0%91%D0%96%D0%A3/" class="pure-menu-link">БЖУ</a>
+    <a href="../%D0%91%D0%96%D0%A3/" class="pure-menu-link">БЖУ</a>
 </li>
 
         
@@ -194,8 +194,8 @@
 
 -->
 
-<li >
-    <a href="../../%D0%9F%D0%B8%D1%82%D0%B0%D0%BD%D0%B8%D0%B5/%D0%9C%D0%B8%D0%BD%D0%B5%D1%80%D0%B0%D0%BB%D1%8B/" class="pure-menu-link">Минералы</a>
+<li class="pure-menu-item">
+    <a href="./" class="pure-menu-link">Минералы</a>
 </li>
 
         
@@ -342,7 +342,7 @@
 -->
 
 <li >
-    <a href="../ublock/" class="pure-menu-link">Ublock</a>
+    <a href="../../Browser/ublock/" class="pure-menu-link">Ublock</a>
 </li>
 
         
@@ -350,8 +350,8 @@
 
 -->
 
-<li class="pure-menu-item">
-    <a href="./" class="pure-menu-link">Изменение интерфейса</a>
+<li >
+    <a href="../../Browser/%D0%98%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%B0/" class="pure-menu-link">Изменение интерфейса</a>
 </li>
 
         
@@ -378,114 +378,55 @@
 <div id="main">
   <div class="content">
     
-        <h1 id="_1">Изменение интерфейса</h1>
-<p>На примере librewolf(firefox). Hotkeys в скобках удобнее чем искать кнопочки.</p>
-<h2 id="_2">Предварительные настройки</h2>
-<p>Настраиваем css браузера под себя с помощью файлика userChrome.css в профиле пользователя.
-Вводим в поиск about:config ищем <code>toolkit.legacyUserProfileCustomizations.stylesheets</code> и переводим в <code>true</code>.</p>
-<p>В поиске <code>about:support</code> &gt; Profile Folder(можно найти через ctrl+f) &gt; Open Folder.
-Если Librewolf, то в обычных настройках <code>about:preferences#librewolf</code> &gt; open user profile directory.</p>
-<p>В открывшейся директории нужно создать папку “chrome” и в ней файл ”userChrome.css”, важен именно такой регистр символов.</p>
-<h2 id="_3">Убираем лишнее</h2>
-<p>В браузере открываем инструменты разработчика (ctrl+shift+I, f12).
-Крайняя слева сверху кнопка позволяет выбрать элемент на странице браузера (ctrl+shift+С). 
-Чтобы стала доступна возможность выбирать и элементы браузера, а не только окно с сайтами, 
-нужно нажать три точки справа сверху панели(f1).
-В правой колонке нас интересуют галки Enable browser chrome ... и Enable remote debugging. </p>
-<p>Открываем <a href="https://firefox-source-docs.mozilla.org/devtools-user/browser_toolbox/index.html">Browser Toolbox</a> 
-- menu &gt; More tools(Developer) &gt; Browser Toolbox(Ctrl + Alt + Shift + I).</p>
-<p>Выбираем нужный элемент, в окне inspector смотрим id элементов.
-Если нужно выбрать пункт в выпадающем меню, нажимаем три точки справа - Disable popup auto-hide.</p>
-<p>Используем id, чтобы скрыть неиспользуемые элементы:</p>
-<details><summary>userChrome.css</summary><pre><code class="css">
-    #star-button-box {
-      display: none !important;
-    }
-
-
-    #appMenu-new-private-window-button2 {
-      display: none !important;
-    }
-    #appMenu-bookmarks-button {
-      display: none !important;
-    }
-    #appMenu-history-button {
-      display: none !important;
-    }
-    #appMenu-passwords-button {
-      display: none !important;
-    }
-
-
-    #context-bookmarkpage {
-      display: none !important;
-    }
-    #context-openlinkinusercontext-menu {
-      display: none !important;
-    }
-    #context-openlinkprivate {
-      display: none !important;
-    }
-    #context-bookmarklink {
-      display: none !important;
-    }
-</code></pre></details>
-
-<h2 id="_4">Вертикальные вкладки</h2>
-<p>Ставим расширение <a href="https://addons.mozilla.org/en-US/firefox/addon/tree-style-tab/">Tree Style Tab</a></p>
-<p>Чтобы убрать горизонтальные вкладки можно добавить в userChrome.css строку:</p>
-<pre><code>#TabsToolbar {visibility: collapse;}
-</code></pre>
-<p>Но можно добавить функциональности:</p>
-<details><summary>userChrome.css</summary><pre><code class="css">
-.tabbrowser-tab {
-  visibility: collapse;
-}
-.titlebar-button {
-  height: 27px !important;
-}
-#nav-bar {
-  margin-top: -42px;
-  margin-right: 140px;
-  box-shadow: none !important;
-}
-
-[uidensity="compact"]:root .titlebar-button {
-  height: 32px !important;
-}
-[uidensity="compact"]:root #nav-bar {
-  margin-top: -32px;
-}
-
-#titlebar-spacer {
-  background-color: var(--chrome-secondary-background-color);
-}
-#titlebar-buttonbox-container {
-  background-color: var(--chrome-secondary-background-color);
-}
-.titlebar-color {
-  background-color: var(--toolbar-bgcolor);
-}
-
-#main-window[inFullscreen="true"] #sidebar-box,
-#main-window[inFullscreen="true"] #sidebar-box + splitter {
-    visibility: collapse;
-}
-
-#sidebar-box #sidebar-header {
-  display: none !important;
-}
-</code></pre></details>
-
-<p>Горизонтальные вкладки скрыты, в full-screen вкладки будут автоматически скрываться.</p>
-<p>Перезапускаем браузер и управляем видимостью вкладок с помощью F1.</p>
-<h2 id="stylus">Stylus</h2>
-<p>Также для изменения css отдельных страниц есть удобное расширение <a href="https://addons.mozilla.org/en-US/firefox/addon/styl-us/">Stylus</a>
-Простой пример использование - выставление доступных готовых css для смены темы сайта на темную версию. </p>
-<h2 id="_5">Ссылки</h2>
-<p><a href="https://www.dedoimedo.com/computers/firefox-change-ui-tutorial.html">Изменение интерфейса</a></p>
-<p><a href="https://firefox-source-docs.mozilla.org/devtools-user/browser_toolbox/index.html">Browser Toolbox</a></p>
-<p><a href="https://www.pcworld.com/article/823939/vertical-tabs-in-firefox-yes-its-really-possible.html">Вертикальные вкладки</a></p>
+        <h1 id="_1">Минералы</h1>
+<h2 id="_2">Йод</h2>
+<h2 id="_3">Кальций</h2>
+<h2 id="_4">Натрий</h2>
+<h2 id="_5">Железо</h2>
+<h3 id="_6">Усвоение</h3>
+<p>В питании различают гемоевое и негемовое железо.
+В животных продуктах железо находится в составе гема(соединения порфиринов с железом).
+Гемовое обычно лучше усваивается и меньше подвержено влиянию других веществ, 
+усвоение негемового зависит от различных факторов. </p>
+<p>Усвоению железа могут препятствовать (или помогать) сочетания  с различными веществами. 
+Мешают такие как алкоголь, кальций, казеин, танины, фитиновая кислота. 
+Способствуют кислоты - аскорбиновая(С), лимонная, молочная, фолиевая(B9). 
+Также витамины А, В12, минералы цинк, медь, марганец.</p>
+<h3 id="_7">Источники</h3>
+<p>Танины придают терпкий, вяжущий привкус.
+Основными пищевыми источниками танинов для человека являются чай(черный и зеленый) и кофе.
+Танины, например, содержатся в какао(темном шоколаде), винограде(особенно в вине).</p>
+<p>Фитиновая кислота содержится в бобовых и злаковых.
+Для снижения фитиновой кислоты нужно предварительно крупы замачивать и сливать воду, 
+в том числе после кипячения.
+У людей последовательно придерживающихся растительного питания(вегетарианцев), 
+фитиновая кислота может полностью расщепляться микрофлорой кишечника.</p>
+<p>Продукты богатые железом.
+Водоросли, бобовые(чечевица), цельнозерновые злаки. Молюски, печенка.</p>
+<p>Особенно зимой для обогащения питания витаминами хорошо есть квашенную капусту.
+А для получения минералов кушать водоросли. 
+Шиповник может содержать значительное количество витамина С и железа.
+Зелень, например петрушка, может содержать много железа.</p>
+<h3 id="_8">Выводы</h3>
+<p>Гемовое железо обычно лучше усваивается, однако по исследованиям его употребление 
+коррелирует с увеличением риска различных болезней
+(рак, диабет, сердечно-сосудистые, метаболический синдром). 
+Поэтому желательно получать железо не только из животных продуктов.</p>
+<p>Ограничение продуктов мешающих усвоению железа важнее чем увеличение потребляемого железа, 
+особенно не желательно без специальных предписаний получать его из добавок, 
+избыток железа тоже вреден.</p>
+<p>Кальций часто прежде всего желательно понижать в питьевой воде(фильтрация, кипячение и т.п.).</p>
+<p>Употребление большого количества продуктов бедных витаминами и минералами 
+усугубляет дефицит(рафинированные сахар и масло, шлифованный рис; 
+продукты из муки высших сортов - выпечка, макароны; 
+ их комбинации - печенье, вафли, пряники и т.д.).
+Существенное употребление сладостей тело компенсирует повышенным расходом витаминов и минералов.</p>
+<h2 id="_9">Кремний</h2>
+<h2 id="_10">Цинк</h2>
+<h2 id="_11">Алюминий</h2>
+<h2 id="_12">Бром</h2>
+<h2 id="_13">Фтор</h2>
+<h2 id="_14">Хлор</h2>
     
     
 
@@ -501,11 +442,11 @@
     
     <nav class="pagination">
       
-        <a href="../ublock/" class="pagination--pager" title="Ublock">&laquo; Previous</a>
+        <a href="../%D0%91%D0%96%D0%A3/" class="pagination--pager" title="БЖУ">&laquo; Previous</a>
       
       
       
-        <a href="../../Zabbix/Partitioning/"  class="pagination--pager" title="Partitioning with external script for mysql/mariadb database"/>Next &raquo;</a>
+        <a href="../../%D0%9F%D0%BE%D1%85%D0%BE%D0%B4/%D0%93%D0%B8%D0%B3%D0%B8%D0%B5%D0%BD%D0%B0/"  class="pagination--pager" title="Гигиена"/>Next &raquo;</a>
       
     </nav>
     
