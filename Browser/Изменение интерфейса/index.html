@@ -417,8 +417,20 @@
 <div id="main">
   <div class="content">
     
-        <h1 id="_1">Изменение интерфейса</h1>
-<p>На примере librewolf(firefox). Hotkeys в скобках удобнее чем искать кнопочки.</p>
+        <p><head></p>
+<style>
+p { text-indent: 25px; }
+</style>
+<p></head></p>
+<h1 id="_1">Изменение интерфейса</h1>
+<p>На примере librewolf(firefox). Hotkeys встречающиеся ниже в скобках удобнее чем искать кнопочки 
+в формочках.
+Во многом понимание формата css будет ограничивать наши возможности, 
+для начала хватит понимания, что важно придерживаться установленой структуры правил 
+и что записи вида body, .body, #body отсылают нас соответсвенно к html тегу, классу, id.
+За ними через пробел описываются свойства в фигурных скобках, для всех элементов с этим тегом, 
+классом или id, хотя id обычно делают уникальными для элемента. 
+Структура выстраивается в виде иерархии, где правила наследуются во вложенные элементы.</p>
 <h2 id="_2">Предварительные настройки</h2>
 <p>Настраиваем css браузера под себя с помощью файлика userChrome.css в профиле пользователя.
 Вводим в поиск about:config ищем <code>toolkit.legacyUserProfileCustomizations.stylesheets</code> и переводим в <code>true</code>.</p>
@@ -470,9 +482,17 @@
     }
 </code></pre></details>
 
+<p>Если хотим что то убрать в страничках about:preference и т.п. то нужно создать 
+в папке "chrome" файл ”userContent.css” и класть туда схожие правила:</p>
+<pre><code class="language-css">    #category-sync {
+      display: none !important;
+    }
+</code></pre>
 <h2 id="_4">Вертикальные вкладки</h2>
-<p>Ставим расширение <a href="https://addons.mozilla.org/en-US/firefox/addon/tree-style-tab/">Tree Style Tab</a></p>
-<p>Чтобы убрать горизонтальные вкладки можно добавить в userChrome.css строку:</p>
+<p>Теперь вертикальные вкладки можно включить просто в настройках, 
+но древовидные вкладки и возможности дополнений могут быть удобнее. 
+Ставим расширение <a href="https://addons.mozilla.org/en-US/firefox/addon/tree-style-tab/">Tree Style Tab</a></p>
+<p>Раньше чтобы убрать горизонтальные вкладки нужно было добавить в userChrome.css строку:</p>
 <pre><code>#TabsToolbar {visibility: collapse;}
 </code></pre>
 <p>Но можно добавить функциональности:</p>
@@ -521,6 +541,28 @@
 <h2 id="stylus">Stylus</h2>
 <p>Также для изменения css отдельных страниц есть удобное расширение <a href="https://addons.mozilla.org/en-US/firefox/addon/styl-us/">Stylus</a>
 Простой пример использование - выставление доступных готовых css для смены темы сайта на темную версию. </p>
+<p>Если же готовых тем нам мало, то открываем инструменты разработчика (ctrl+shift+I, f12).
+Крайняя слева сверху кнопка позволяет выбрать элемент на странице браузера (ctrl+shift+С). 
+Средний раздел, смещенный вправо покажет используемые css, 
+для изменения цветов нас в первую очередь интересуют поля с 
+background=#f8f8f8, background-color=#fff, color=rgb(254,254,254), 
+задающие цвета. 
+Можно целиком копировать в stylus отуда выражения вида:</p>
+<pre><code class="language-css">BODY {
+  background: #FFF;
+    background-image: none;
+  font: 400 16px/1.4 ProximaNova,Helvetica,sans-serif;
+    font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #435459;
+}
+</code></pre>
+<p>После уже там удобно выбрать нужный цвет на палитре, удалить ненужные для темы строки, 
+которые просто дублируют оригинальные.
+Обычно color задает цвет шрифта, а background цвет фона.
+Правила в css файле stylus перезаписывают оригинальные с сайта у вас в браузере, 
+если трогать только цвета то вы ничего не сломаете в поведении сайта.</p>
 <h2 id="_5">Ссылки</h2>
 <p><a href="https://www.dedoimedo.com/computers/firefox-change-ui-tutorial.html">Изменение интерфейса</a></p>
 <p><a href="https://firefox-source-docs.mozilla.org/devtools-user/browser_toolbox/index.html">Browser Toolbox</a></p>
