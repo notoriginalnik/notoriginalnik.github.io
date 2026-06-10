@@ -17,7 +17,7 @@
     Site name contains the name as defined in the mkdocs.yml
   -->
   
-  <title>install [zabbix-agent] - not name</title>
+  <title>opensource programs - not name</title>
   
   <!--
     You can include external assets of course, but be aware that it means the
@@ -242,8 +242,17 @@
 
 -->
 
+<li class="pure-menu-item">
+    <a href="./" class="pure-menu-link">opensource programs</a>
+</li>
+
+        
+            <!--
+
+-->
+
 <li >
-    <a href="../../%D0%9A%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80/%D0%BA%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80/" class="pure-menu-link">Компьютер</a>
+    <a href="../%D0%BA%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80/" class="pure-menu-link">Компьютер</a>
 </li>
 
         
@@ -274,102 +283,6 @@
 
 <li >
     <a href="../../%D0%9A%D0%B8%D0%BD%D0%BE%D0%BA%D0%B0%D1%82%D0%B0%D0%BB%D0%BE%D0%B3/%D0%A4%D0%B8%D0%BB%D1%8C%D0%BC%D1%8B/" class="pure-menu-link">Фильмы</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-  
-    <!--
-
--->
-
-  <li class="pure-menu-folder">
-    Useful programs
-    <ul>
-        
-            <!--
-
--->
-
-<li >
-    <a href="../../useful_programs/" class="pure-menu-link">opensource programs</a>
-</li>
-
-        
-    </ul>
-  </li>
-
-  
-    <!--
-
--->
-
-  <li class="pure-menu-folder">
-    Zabbix
-    <ul>
-        
-            <!--
-
--->
-
-<li >
-    <a href="../Partitioning/" class="pure-menu-link">Partitioning with external script for mysql/mariadb database</a>
-</li>
-
-        
-            <!--
-
--->
-
-<li >
-    <a href="../SSO/" class="pure-menu-link">SSO in zabbix</a>
-</li>
-
-        
-            <!--
-
--->
-
-<li >
-    <a href="../linux_template/" class="pure-menu-link">linux template</a>
-</li>
-
-        
-            <!--
-
--->
-
-<li >
-    <a href="../mariadb/" class="pure-menu-link">Install mariadb node of galera + haproxy + keepalived</a>
-</li>
-
-        
-            <!--
-
--->
-
-<li >
-    <a href="../mysql_monitoring/" class="pure-menu-link">Monitoring mysql/mariadb</a>
-</li>
-
-        
-            <!--
-
--->
-
-<li class="pure-menu-item">
-    <a href="./" class="pure-menu-link">install [zabbix-agent]</a>
-</li>
-
-        
-            <!--
-
--->
-
-<li >
-    <a href="../zabbix-proxy/" class="pure-menu-link">Zabbix-proxy</a>
 </li>
 
         
@@ -426,86 +339,125 @@
 <div id="main">
   <div class="content">
     
-        <h1 id="install-zabbix-agent">install <a href="https://www.zabbix.com/documentation/current/manual/concepts/agent">zabbix-agent</a></h1>
-<p>Go in <a href="https://repo.zabbix.com/zabbix/">repo</a> for actual version of rpm (example Centos 7) :</p>
-<pre><code class="language-sh">rpm -ivh https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm 
-yum -y install zabbix-agent
-chkconfig zabbix-agent on
-</code></pre>
-<p>You can use jinja template for config of zabbix-agent <code>/etc/zabbix/zabbix_agentd.conf</code>.
-Default settings on agent (other options generally useless):</p>
-<pre><code class="language-conf">PidFile=/var/run/zabbix/zabbix_agentd.pid
-LogFile=/var/log/zabbix/zabbix_agentd.log
-LogFileSize=0
-Server={{ Proxy[hostname] }}
-ServerActive={{ Proxy[hostname] }}
-Hostname={{ Host[hostname] }} # !!!Must be like name of host in web
-Include=/etc/zabbix/zabbix_agentd.d/*.conf
-</code></pre>
-<p>Give access and starting:</p>
-<pre><code class="language-sh">iptables -I INPUT -p tcp --dport 10050 -j ACCEPT
-iptables-save &gt; /dev/null 2&gt;&amp;1
-service zabbix-agent start
-</code></pre>
-<p>If we use selinux, need allow zabbix-agent, or check that selinux disabled.
-For firewalld:</p>
-<pre><code class="language-sh">firewall-cmd --permanent --add-port=10050/tcp
-firewall-cmd --reload
-</code></pre>
-<p>You may need to create directories manually:</p>
-<pre><code class="language-sh">mkdir /var/run/zabbix &amp;&amp; chown -R zabbix:zabbix /var/run/zabbix
-mkdir /var/log/zabbix &amp;&amp; chown -R zabbix:zabbix /var/log/zabbix
-</code></pre>
-<h2 id="playbook">playbook</h2>
-<p>Example of ansible role for centos 7:</p>
-<pre><code class="language-yml">- name: Install, configure, and start zabbix-agent
-  block:
-    - name: add rpm
-      yum: name=https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm
+        <h1 id="opensource-programs">opensource programs</h1>
+<h2 id="crossplatform">crossplatform</h2>
+<h3 id="filemanager">filemanager</h3>
+<details><summary>doublecommander <a href="https://github.com/doublecmd/doublecmd">github</a></summary>
+    <pre>
+    Internal text editor (F4)  with syntax hightlighting
+    Built in file viewer (F3) to view files of in hex, binary or text format
+    Archives are handled like subdirectories. You can easily copy files to and from archives. Supported archive types: ZIP, TAR, GZ, BZ2, XZ, LZMA, 7Z and also RPM, CPIO, DEB, RAR, ZIPX
+    Extended  search function with full text search in any files
+    Configurable button bar to start external programs or internal menu commands
+    Total Commander WCX, WDX, WFX and WLX plug-ins support
 
-    - name: install zabbix-agent
-      yum:
-        name: zabbix-agent
-        state: present
 
-    - name: copy userparams
-      copy:
-       src: 'templates/userparams.conf'
-       dest: '/etc/zabbix/zabbix_agentd.d/userparams.conf'
-       owner: zabbix
-       group: zabbix
+    Unicode support
+    Most operations working in background
+    FTP, FTPS, FTPES, SSH+SCP and SFTP protocols support
+    Multi-rename tool
+    Tabbed interface
+    Custom columns
+    File operations logging
+    </pre>
+</details>
 
-    - name: make config
-      template:
-       src: 'templates/zabbix_agentd.j2'
-       dest: '/etc/zabbix/zabbix_agentd.conf'
-
-    - name: add line in iptables
-      command: iptables -I INPUT 5 -p tcp --dport 10050 -j ACCEPT
-
-    - name: iptables save
-      shell: iptables-save &gt; /etc/sysconfig/iptables
-
-    - name: enable zabbix-agent
-      command: chkconfig zabbix-agent on
-
-    - name: start zabbix-agent
-      service:
-        name: zabbix-agent
-        state: started
-  when: 
-    - ansible_facts['distribution'] == 'CentOS'
-    - ansible_facts['distribution_major_version'] == &quot;7&quot;
-  become: true
-  ignore_errors: yes
-</code></pre>
+<h3 id="text_editor">text_editor</h3>
+<p><a href="https://www.vim.org/">vim</a><br />
+<a href="https://www.libreoffice.org/">libreoffice</a>  </p>
+<h3 id="image_editor">image_editor</h3>
+<p><a href="http://mypaint.org/">mypaint</a><br />
+<a href="https://www.gimp.org/downloads/">gimp</a><br />
+<a href="https://imagemagick.org/">ImageMagick</a>  </p>
+<h3 id="audio_editor">audio_editor</h3>
+<p><a href="https://www.audacityteam.org/">audacity</a></p>
+<h3 id="audio_video">audio_video</h3>
+<p><a href="https://www.videolan.org/vlc/">vlc</a></p>
+<h3 id="browser">browser</h3>
+<p><a href="https://www.gnu.org/software/gnuzilla/">IceCat</a>
+<a href="https://librewolf.net/">libreWolf</a></p>
+<h4 id="extensions">extensions</h4>
+<p><a href="https://github.com/gorhill/uBlock">uBlock Origin</a><br />
+<a href="https://github.com/gorhill/uMatrix">uMatrix</a><br />
+<a href="https://github.com/Albirew/resurrect-pages">resurrect-pages</a><br />
+<a href="https://github.com/openstyles/stylus">stylus</a><br />
+<a href="https://github.com/piroor/treestyletab">treestyletab</a></p>
+<p>privacy?<br />
+<a href="https://github.com/kkapsner/CanvasBlocker">CanvasBlocker</a><br />
+<a href="https://github.com/ACK-J/Port_Authority">Port Authority</a><br />
+<a href="https://github.com/cowlicks/privacypossum">Privacy Possum</a>  </p>
+<p>sometimes<br />
+<a href="https://github.com/ivanruvalcaba/multi-keywords-highlighter">multi-keywords-highlighter</a><br />
+<a href="https://github.com/iorate/ublacklist">ublacklist</a><br />
+<a href="https://github.com/belaviyo/save-images">Download All Images</a></p>
+<h3 id="modeling">modeling</h3>
+<p><a href="https://www.blender.org/">blender</a></p>
+<h3 id="torrent">torrent</h3>
+<p><a href="https://www.qbittorrent.org/">qbittorrent</a></p>
+<h3 id="2d_design">2D_design</h3>
+<p><a href="https://librecad.org/">librecad</a></p>
 <h2 id="win">win</h2>
-<p>If you <a href="https://www.zabbix.com/download_agents">downloaded</a> archive , unzip the files and put them where they should be (i put the files in c:\zabbix for example).
-Change settings Server/ServerActive/Hostname in zabbix_agentd.conf. Run cmd from admin: </p>
-<pre><code class="language-cmd">zabbix_agentd.exe -c c:\zabbix\conf\zabbix_agentd.conf --install
-zabbix_agentd.exe --start
-</code></pre>
-<p>Do not forget to add an exception to the firewall =)</p>
+<h3 id="text_editor_1">text_editor</h3>
+<details><summary>notepad++ <a href="https://notepad-plus-plus.org/">website</a></summary>
+    <pre>
+Small and fast
+Dark mode
+syntax highlighting
+code folding
+limited autocompletion
+Autosave
+Finding and replacing strings of text with regular expressions
+Searching text strings within opened tabs
+Searching text strings in a directory
+Guided indentation
+Line bookmarking
+Macros
+Simultaneous editing
+Split screen editing and synchronized scrolling
+Line operations, including sorting, case conversion (Uppercase, lowercase, camel case, sentence case), and removal of redundant whitespace
+Tabbed document interface
+    </pre>
+</details>
+
+<h3 id="textview">textview</h3>
+<details><summary>sumatrapdf <a href="https://github.com/sumatrapdfreader/sumatrapdf">github</a></summary>
+    <pre>
+Small and fast
+Multi-format 
+(PDF, EPUB, MOBI, CBZ, CBR, FB2, CHM, XPS, DjVu)
+<a href="https://www.sumatrapdfreader.org/free-pdf-reader">website</a>
+    </pre>
+</details>
+
+<h3 id="image">image</h3>
+<details><summary>greenshoot <a href="https://github.com/greenshot/greenshot">github</a></summary>
+    <pre>
+Quickly create screenshots of a selected region, window or fullscreen
+Easily annotate, highlight or obfuscate parts of the screenshot
+Export: save to file, send to printer, copy to clipboard, attach to e-mail, send Office programs or upload to photo sites like Flickr or Picasa, and others. 
+<a href="https://getgreenshot.org/">website</a>
+    </pre>
+</details>
+
+<details><summary>jpegview <a href="https://github.com/sylikc/jpegview">github</a></summary>
+    <pre>
+Small and fast
+Multi-format 
+Popular: JPEG, GIF
+Lossless: BMP, PNG, TIFF
+Web: WEBP, JXL, HEIF/HEIC, AVIF
+Legacy: TGA, WDP, HDP, JXR
+Camera RAW formats:
+    Adobe (DNG), Canon (CRW, CR2), Nikon (NEF, NRW), Sony (ARW, SR2)
+    Olympus (ORF), Panasonic (RW2), Fujifilm (RAF)
+    Sigma (X3F), Pentax (PEF), Minolta (MRW), Kodak (KDC, DCR)
+Basic Image Editor
+<a href="https://sourceforge.net/projects/jpegview/">old website</a>
+    </pre>
+</details>
+
+<h3 id="audio_video_1">audio_video</h3>
+<p><a href="https://github.com/clsid2/mpc-hc">MPC-HC</a></p>
     
     
 
@@ -521,11 +473,11 @@ zabbix_agentd.exe --start
     
     <nav class="pagination">
       
-        <a href="../mysql_monitoring/" class="pagination--pager" title="Monitoring mysql/mariadb">&laquo; Previous</a>
+        <a href="../../%D0%9A%D0%B8%D0%BD%D0%BE%D0%BA%D0%B0%D1%82%D0%B0%D0%BB%D0%BE%D0%B3/%D0%A4%D0%B8%D0%BB%D1%8C%D0%BC%D1%8B/" class="pagination--pager" title="Фильмы">&laquo; Previous</a>
       
       
       
-        <a href="../zabbix-proxy/"  class="pagination--pager" title="Zabbix-proxy"/>Next &raquo;</a>
+        <a href="../%D0%BA%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80/"  class="pagination--pager" title="Компьютер"/>Next &raquo;</a>
       
     </nav>
     
